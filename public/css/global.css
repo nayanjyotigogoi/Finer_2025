@@ -1,0 +1,31 @@
+/* Reset margin and padding for consistency */
+* {
+    font-family: 'Poppins';
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Basic styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+    /* overflow-x: hidden; Prevent horizontal scrolling */
+}
+
+html, body {
+    min-height: 100%; /* Ensure the page extends with content */
+    overflow-y: auto; /* Allow vertical scrolling */
+}
+
+/* Section Styling */
+section {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+section:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+
