@@ -24,18 +24,14 @@
             top: 0;
             left: 0;
             width: 100%;
-            background-color: #1a237e;
+            background-color: rgba(45, 51, 138, 0.8);
             color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 20px;
+            padding: 6px 40px;
             z-index: 1000;
             transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
-        }
-
-        .nav-container.transparent {
-            background-color: rgba(26, 35, 126, 0.5);
         }
 
         .nav-container.hidden {
@@ -43,22 +39,67 @@
         }
 
         .nav-links {
-            padding-left: 150px;
-            padding-right: 30px;
             list-style: none;
             display: flex;
-            gap: 10px;
+            gap: 20px;
             align-items: center;
+        }
+
+        .nav-links li {
+            position: relative;
         }
 
         .nav-links a {
             color: white;
             text-decoration: none;
             padding: 10px 15px;
-            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s ease;
         }
 
         .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Dropdown Styling */
+        .dropdown-icon {
+            font-size: 0.8em;
+            transform: rotate(0deg);
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-icon {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: rgba(26, 35, 126, 0.9);
+            padding: 10px 0;
+            list-style: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-menu a:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
 
@@ -69,13 +110,8 @@
         }
 
         .logo {
-            width: 50px;
+            width: 45px;
             height: 50px;
-        }
-
-        .logo-text {
-            font-size: 1.2em;
-            font-weight: bold;
         }
 
         /* Button styling */
@@ -99,16 +135,32 @@
 <body>
     <nav class="nav-container">
         <div class="logo-container">
-            <img src="https://via.placeholder.com/50" alt="Logo" class="logo">
-            <div class="logo-text">FINER</div>
+            <img src="assests/darkbackground_logo.png" alt="Logo" class="logo">
         </div>
         <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About Us</a></li>
+            <li><a href="/">Home</a></li>
+            <li class="dropdown">
+                <a href="#about">
+                    About <span class="dropdown-icon">▼</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url('/about-us') }}">About Us</a></li>
+                    <li><a href="{{ url('/finer-foundation')}}">Finer Foundation</a></li>
+                    <li><a href="{{ url('/directors-&-past-presidents')}}">Directors</a></li>
+                </ul>
+            </li>
             <li><a href="#initiative">Initiative</a></li>
-            <li><a href="#events">Events</a></li>
-            <li><a href="#events">Knowledge</a></li>
-            <li><a href="#events">Publications</a></li>
+            <li class="dropdown">
+                <a href="#events">
+                    Events <span class="dropdown-icon">▼</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url('/upcoming-events') }}">Upcoming Events</a></li>
+                    <li><a href="{{ url('/past-events')}}">Past Events</a></li>
+                </ul>
+            </li>
+            <li><a href="#knowledge">Knowledge</a></li>
+            <li><a href="#publications">Publications</a></li>
             <li><a href="#gallery">Gallery</a></li>
             <li><a href="#contact">Contact Us</a></li>
         </ul>
@@ -116,38 +168,26 @@
     </nav>
 
     <script>
-const nav = document.querySelector('.nav-container');
-let lastScrollY = window.scrollY;
+        const nav = document.querySelector('.nav-container');
+        let lastScrollY = window.scrollY;
 
-window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
 
-    if (currentScrollY === 0) {
-        // At the very top of the page: Semi-transparent navbar
-        nav.classList.add('transparent');
-        nav.classList.remove('hidden');
-        nav.style.backgroundColor = ''; // Reset inline styles
-    } else if (currentScrollY < window.innerHeight) {
-        // In the hero section: Fully visible with no transparency
-        nav.classList.remove('transparent');
-        nav.classList.remove('hidden');
-        nav.style.backgroundColor = ''; // Reset inline styles
-    } else {
-        // Below the hero section
-        nav.classList.remove('transparent');
-        if (currentScrollY > lastScrollY) {
-            nav.classList.add('hidden'); // Hide on scroll down
-        } else {
-            nav.classList.remove('hidden'); // Show on scroll up
-        }
-    }
+            if (currentScrollY > lastScrollY) {
+                nav.classList.add('hidden'); // Hide on scroll down
+            } else {
+                nav.classList.remove('hidden'); // Show on scroll up
+            }
 
-    lastScrollY = currentScrollY;
-});
+            lastScrollY = currentScrollY;
+        });
 
-// Trigger initial scroll check
-window.dispatchEvent(new Event('scroll'));
-
+        // Redirect to Become a Member page on button click
+        const memberButton = document.querySelector('.member-btn');
+        memberButton.addEventListener('click', () => {
+            window.location.href = '/become-a-member'; // Update with your actual route URL
+        });
     </script>
 </body>
 </html>

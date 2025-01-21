@@ -6,8 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PressReleaseController;
-
+use App\Http\Controllers\PastPresidentController;
 use App\Http\Controllers\DirectorProfilesController;
+use App\Http\Controllers\DirectorsPresidentsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,7 +20,7 @@ use App\Http\Controllers\DirectorProfilesController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/test', function () {
     return view('welcome');
 });
 
@@ -28,7 +29,9 @@ Route::get('/admin', function () {
 });
 
 //Route for home section
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+//admin routes
 
 //banner controller route admin routes
 Route::prefix('admin')->group(function () {
@@ -70,7 +73,7 @@ Route::prefix('admin/press_releases')->group(function () {
     Route::delete('/destroy/{id}', [PressReleaseController::class, 'destroy'])->name('press_releases.destroy');
 });
 
-
+//route for the director profiles 
 Route::prefix('admin')->group(function () {
     Route::get('/director-profiles', [DirectorProfilesController::class, 'index'])->name('director_profiles.view');
     Route::get('/director-profiles/create', [DirectorProfilesController::class, 'create'])->name('director_profiles.create');
@@ -81,5 +84,35 @@ Route::prefix('admin')->group(function () {
 });
 
 
+
+Route::get('past_presidents', [PastPresidentController::class, 'view'])->name('past_presidents.view');
+Route::get('past_presidents/create', [PastPresidentController::class, 'create'])->name('past_presidents.create');
+Route::post('past_presidents', [PastPresidentController::class, 'store'])->name('past_presidents.store');
+Route::get('past_presidents/{past_president}/edit', [PastPresidentController::class, 'edit'])->name('past_presidents.edit');
+Route::put('past_presidents/{past_president}', [PastPresidentController::class, 'update'])->name('past_presidents.update');
+Route::delete('past_presidents/{past_president}', [PastPresidentController::class, 'destroy'])->name('past_presidents.destroy');
+
+
+
+Route::get('/become-a-member', function () {
+    return view('become_member'); // Assuming the Blade view is 'resources/views/become_member.blade.php'
+});
+
+//route for the about in the navbar.
+// About Us page
+Route::view('/about-us', 'about.aboutus');
+
+// Finer Foundation page
+Route::view('/finer-foundation', 'about.finer_foundation');
+
+// Directors & Past Presidents page route
+Route::get('/directors-&-past-presidents', [DirectorsPresidentsController::class, 'directors']);
+
+
+//routes for events page
+
+Route::get('/upcoming-events', [EventController::class, 'upcoming_events'])->name('events.upcoming');
+
+Route::get('/past-events', [EventController::class, 'past_events'])->name('events.upcoming');
 
 

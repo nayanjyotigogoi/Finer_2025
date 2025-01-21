@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -106,5 +107,23 @@ class EventController extends Controller
 
         // Redirect back with a success message
         return redirect()->route('events.view')->with('success', 'Event deleted successfully.');
+    }
+
+    public function upcoming_events(){
+
+        // Fetch only active events sorted by their order
+        $events = Event::where('status', 1)->orderBy('order', 'asc')->get();
+
+        // Fetch the banner with `status = 1`
+        $banner = Banner::where('status', 1)->orderBy('order', 'asc')->first();
+        return view('event_page.upcoming_event', compact('banner','events'));
+    
+    }
+
+    public function past_events(){
+
+        $events = Event::where('status', 0)->orderBy('order', 'asc')->get();
+        
+        return view('event_page.past_event', compact('events'));
     }
 }

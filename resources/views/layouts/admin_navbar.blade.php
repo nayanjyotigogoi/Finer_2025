@@ -107,17 +107,17 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>Banner</span><i class="bi bi-chevron-down ms-auto"></i>
+        <i class="bi bi-postcard-fill"></i><span>Banner</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="{{ route('banners.view') }}">
-              <i class="bi bi-circle"></i><span>View Banner</span>
+              <i class="bbi bi-list-ul"></i><span>View Banner</span>
             </a>
           </li>
           <li>
             <a href="{{ route('banners.create') }}">
-              <i class="bi bi-circle"></i><span>Add Banner</span>
+              <i class="bi bi-plus-circle"></i><span>Add Banner</span>
             </a>
           </li>
         </ul>
@@ -130,12 +130,12 @@
         <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="{{ route('events.view') }}">
-              <i class="bi bi-circle"></i><span>View Events</span>
+              <i class="bi bi-list-ul"></i><span>View Events</span>
             </a>
           </li>
           <li>
             <a href="{{ route('events.create') }}">
-              <i class="bi bi-circle"></i><span>Add Events</span>
+              <i class="bi bi-plus-circle"></i><span>Add Events</span>
             </a>
           </li>
         </ul>
@@ -148,12 +148,12 @@
         <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="{{ route('press_releases.view') }}">
-              <i class="bi bi-circle"></i><span>View Press Release</span>
+              <i class="bi bi-list-ul"></i><span>View Press Release</span>
             </a>
           </li>
           <li>
             <a href="{{ route('press_releases.create') }}">
-              <i class="bi bi-circle"></i><span>Add Press Release</span>
+              <i class="bi bi-plus-circle"></i><span>Add Press Release</span>
             </a>
           </li>
         </ul>
@@ -161,21 +161,44 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Board Members</span><i class="bi bi-chevron-down ms-auto"></i>
+        <i class="bi bi-people"></i><span>Board Members</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="{{ route('director_profiles.view') }}">
-              <i class="bi bi-circle"></i><span>View Member</span>
+              <i class="bi bi-list-ul"></i><span>View Member</span>
             </a>
           </li>
           <li>
             <a href="{{ route('director_profiles.create') }}">
-              <i class="bi bi-circle"></i><span>Add Member</span>
+              <i class="bi bi-plus-circle"></i><span>Add Member</span>
             </a>
           </li>
         </ul>
-      </li><!-- End Charts Nav -->
+      </li>
+
+      <!-- past president -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#past-presidents-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-person-circle"></i><span>Past Presidents</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+         <ul id="past-presidents-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+                <a href="{{ route('past_presidents.view') }}">
+                    <i class="bi bi-list-ul"></i><span>All Past Presidents</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('past_presidents.create') }}">
+                    <i class="bi bi-plus-circle"></i><span>Add New Past President</span>
+                </a>
+            </li>
+
+        </ul>
+      </li><!-- End Past Presidents Nav -->
+<!-- End Charts Nav -->
+
+
     </ul>
 
   </aside><!-- End Sidebar-->

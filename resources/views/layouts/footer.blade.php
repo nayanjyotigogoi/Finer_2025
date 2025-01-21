@@ -68,8 +68,8 @@ body {
     content: '';
     display: block;
     width: 100%;
-    height: 2px;
-    background-color: white;
+    height: 1px;
+    background-color: #ffffff33;
     margin-bottom: 20px; /* Space between the line and the copyright text */
 }
 
@@ -128,7 +128,7 @@ body {
 
     <div class="footer-content">
         <div class="footer-section logo">
-            <img src="logo.png" alt="FINER Logo">
+            <img src="assests/darkbackground_logo.png" alt="FINER Logo">
         </div>
 
         <div class="footer-section">

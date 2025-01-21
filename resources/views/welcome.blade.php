@@ -3,105 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Website')</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    @stack('styles') <!-- Add page-specific styles -->
+    <title>Past Events</title>
     <style>
-        /* Preloader Styles */
-        #preloader {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* Your existing CSS remains unchanged */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #000066, #0033cc);
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wave-pattern {
+            position: absolute;
             width: 100%;
             height: 100%;
-            background-color: #000; /* Background color */
-            z-index: 9999;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.1) 0px,
+                rgba(255, 255, 255, 0.1) 2px,
+                transparent 2px,
+                transparent 8px
+            );
+            animation: waveMove 20s linear infinite;
+        }
+
+        .header h1 {
+            color: white;
+            font-size: 48px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .event-title {
+            color: #ff9900;
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .event-card {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .event-image {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .event-description {
+            flex: 1;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .pagination {
             display: flex;
             justify-content: center;
-            align-items: center;
+            gap: 10px;
+            margin-top: 40px;
         }
 
-        #top-door, #bottom-door {
-            position: absolute;
-            width: 100%;
-            height: 50%;
-            background-color: #333;
-            transition: transform 1s ease-in-out;
+        .pagination button {
+            padding: 8px 12px;
+            border: none;
+            background: #f0f0f0;
+            cursor: pointer;
+            border-radius: 4px;
         }
 
-        #top-door { top: 0; transform: translateY(0); }
-        #bottom-door { bottom: 0; transform: translateY(0); }
-
-        #logo {
-            position: absolute;
-            z-index: 1000;
-            transition: all 1s ease-in-out;
+        .pagination button.active {
+            background: #000066;
+            color: white;
         }
 
-        #logo.move-to-nav {
-            transform: translate(calc(-50vw + 2rem), calc(-50vh + 2rem)) scale(0.75);
+        @keyframes waveMove {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 50px 50px;
+            }
         }
-
-        #top-door.open { transform: translateY(-100%); }
-        #bottom-door.open { transform: translateY(100%); }
-
-        #navbar { transform: translateX(-100%); transition: transform 1s ease-in-out; }
-        #navbar.show { transform: translateX(0); }
-
-        #home    { transform: translateX(100%); transition: transform 1s ease-in-out; }
-        #home.show { transform: translateX(0); }
     </style>
 </head>
-<body class="h-screen w-screen overflow-hidden">
-    <!-- Preloader -->
-    <div id="preloader">
-        <div id="top-door"></div>
-        <div id="bottom-door"></div>
-        <div id="logo">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmQwaDI3MzdsZWdjejlvYTNsZWNpbXQ5ZDkzNHpkZmZqZmh2eXY2ZiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/OU2rWcRfrAmSchUv70/giphy.gif" alt="Logo" class="w-32 h-32 object-cover">
+<body>
+    <header class="header">
+        <div class="wave-pattern"></div>
+        <h1>Past Events</h1>
+    </header>
+
+    <main class="content">
+        <h2 class="event-title">Past Events</h2>
+        <div id="events-container">
+            <!-- Events will be populated by JavaScript -->
         </div>
-    </div>
-
-    <!-- Navbar -->
-    <nav id="navbar">
-        @include('layouts.navbar') <!-- Include your navbar -->
-    </nav>
-
-    <!-- Main Content -->
-    <main id="home">
-        @yield('content') <!-- Render home or other sections -->
+        <div class="pagination" id="pagination">
+            <!-- Pagination buttons will be generated dynamically -->
+        </div>
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const preloader = document.getElementById('preloader');
-            const topDoor = document.getElementById('top-door');
-            const bottomDoor = document.getElementById('bottom-door');
-            const logo = document.getElementById('logo');
-            const navbar = document.getElementById('navbar');
-            const home = document.getElementById('home');
-
-            // Simulate loading time
-            setTimeout(() => {
-                topDoor.classList.add('open');
-                bottomDoor.classList.add('open');
-
-                setTimeout(() => {
-                    logo.classList.add('move-to-nav');
-                }, 500);
-
-                setTimeout(() => {
-                    navbar.classList.add('show');
-                }, 1000);
-
-                setTimeout(() => {
-                    home.classList.add('show');
-                    preloader.style.display = 'none';
-                }, 1500);
-            }, 2000); // Simulate 2 seconds of loading time
+        // Sample event data
+        const events = Array(5).fill({
+            image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(10).jpg-Q4RCryX9nootp8J58jDACpHMGcV7yY.jpeg",
+            description: "Lorem ipsum dolor sit amet consectetur. Velit vehicula elementum eget scelerisque. Ut mollis tincidunt mus ut sed sagittis et pellentesque. Praesent a odio enim non risus facilisi lorem."
         });
+
+        const eventsContainer = document.getElementById('events-container');
+        const paginationContainer = document.getElementById('pagination');
+        const eventsPerPage = 3; // Number of events per page
+        let currentPage = 1; // Current active page
+
+        // Render events for the current page
+        function renderEvents() {
+            const startIndex = (currentPage - 1) * eventsPerPage;
+            const endIndex = startIndex + eventsPerPage;
+            const visibleEvents = events.slice(startIndex, endIndex);
+
+            eventsContainer.innerHTML = visibleEvents.map(event => `
+                <div class="event-card">
+                    <img src="${event.image}" alt="Event" class="event-image">
+                    <p class="event-description">${event.description}</p>
+                </div>
+            `).join('');
+        }
+
+        // Generate pagination buttons
+        function renderPagination() {
+            const totalPages = Math.ceil(events.length / eventsPerPage);
+            paginationContainer.innerHTML = '';
+
+            // Generate Previous Button
+            const prevButton = document.createElement('button');
+            prevButton.textContent = '← Back';
+            prevButton.onclick = () => changePage(currentPage - 1);
+            prevButton.disabled = currentPage === 1;
+            paginationContainer.appendChild(prevButton);
+
+            // Generate Page Buttons
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.className = currentPage === i ? 'active' : '';
+                pageButton.onclick = () => changePage(i);
+                paginationContainer.appendChild(pageButton);
+            }
+
+            // Generate Next Button
+            const nextButton = document.createElement('button');
+            nextButton.textContent = 'Next →';
+            nextButton.onclick = () => changePage(currentPage + 1);
+            nextButton.disabled = currentPage === totalPages;
+            paginationContainer.appendChild(nextButton);
+        }
+
+        // Change the current page
+        function changePage(page) {
+            const totalPages = Math.ceil(events.length / eventsPerPage);
+            if (page < 1 || page > totalPages) return; // Prevent invalid page numbers
+            currentPage = page;
+            renderEvents();
+            renderPagination();
+        }
+
+        // Initialize the page
+        function init() {
+            renderEvents();
+            renderPagination();
+        }
+
+        init();
     </script>
-    @stack('scripts') <!-- Add page-specific scripts -->
 </body>
 </html>

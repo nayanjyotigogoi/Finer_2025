@@ -28,7 +28,7 @@ class directorProfilesController extends Controller
             'company' => 'required|string|max:255',
             'address' => 'nullable|string|max:500',
             'status' => 'required|in:0,1',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:255',
         ]);
 
         $photoPath = null;
@@ -64,7 +64,7 @@ class directorProfilesController extends Controller
             'company' => 'required|string|max:255',
             'address' => 'nullable|string|max:500',
             'status' => 'required|in:0,1',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:255',
         ]);
 
         $directorProfile = director_profile::findOrFail($id);

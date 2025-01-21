@@ -7,6 +7,8 @@ use App\Models\Banner;
 use App\Models\Event;
 use App\Models\press_release;
 use App\Models\director_profile;
+use App\Models\past_president; 
+
 
 class HomeController extends Controller
 {
@@ -38,5 +40,6 @@ class HomeController extends Controller
         // Pass all the data to the view
         return view('home', compact('banners', 'upcomingEvents', 'pastEvents', 'pressReleases', 'directors'));
     }
+        
 }
 

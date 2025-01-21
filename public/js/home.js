@@ -1,10 +1,15 @@
+// script for loading
 document.addEventListener('DOMContentLoaded', () => {
+
+    window.scrollTo(0, 0); // Scroll to the top of the page on load
+
     const preloader = document.getElementById('preloader');
     const topDoor = document.getElementById('top-door');
     const bottomDoor = document.getElementById('bottom-door');
     const logo = document.getElementById('logo');
     const navbar = document.getElementById('navbar');
     const home = document.getElementById('home');
+
 
     // Simulate loading time
     setTimeout(() => {
@@ -24,81 +29,69 @@ document.addEventListener('DOMContentLoaded', () => {
             preloader.style.display = 'none';
         }, 1500);
     }, 2000); // Simulate 2 seconds of loading time
+
 });
 
-//hero section
+//javascript for home section
 document.addEventListener('DOMContentLoaded', () => {
+
+    
     const heroSection = document.getElementById('heroSection');
     const imageGallery = document.getElementById('imageGallery');
-    const galleryImages = imageGallery.querySelectorAll('.gallery-image');
+    // const galleryImages = imageGallery.querySelectorAll('.gallery-image');
 
     const heroData = [
-        {
-            image: "assests/hero_1.jpg",
-            caption: "Explore the Wilderness",
-            description: "Dive into the untouched beauty of nature's splendor."
-        },
-        {
-            image: "assests/hero_2.jpg",
-            caption: "Discover the Future",
-            description: "Step into the realm of innovation and technology."
-        },
-        {
-            image: "assests/hero_3.jpg",
-            caption: "Capture the Moment",
-            description: "Every frame tells a unique story worth sharing."
-        },
-        {
-            image: "assests/hero_4.jpg",
-            caption: "Embrace the Outdoors",
-            description: "Find your adventure in the vast wilderness."
-        },
-        {
-            image: "assests/hero_5.jpg",
-            caption: "Step Into Tomorrow",
-            description: "Witness the marvels of modern innovation."
-        },
-        {
-            image: "assests/hero_6.jpg",
-            caption: "Memories in Focus",
-            description: "Every frame captures a unique and precious moment."
-        }
+        "assests/hero_1.jpg",
+        "assests/hero_2.jpg",
+        "assests/hero_3.jpg",
     ];
 
     let currentIndex = 0;
     let backgroundInterval;
 
+    // Dynamically populate the gallery images
+    heroData.forEach(image => {
+        const imgElement = document.createElement('img');
+        imgElement.src = image;
+        imgElement.alt = 'Gallery image';
+        imgElement.classList.add('gallery-image');
+        imageGallery.appendChild(imgElement);
+    });
+
+    // Update hero section content
     const updateHeroContent = () => {
-        const currentData = heroData[currentIndex];
-
-        // Update hero section background
-        heroSection.style.backgroundImage = `url(${currentData.image})`;
-
-        // Update text content
+        const currentImage = heroData[currentIndex];
+    
+        // Update hero section background with gradient and image
+        heroSection.style.backgroundImage = `
+            linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6)),
+            url(${currentImage})
+        `;
+    
+        // Reset and trigger text animations again
         const heroTitle = heroSection.querySelector('h1');
         const heroDescription = heroSection.querySelector('p');
-
-        // Reset and trigger text animations
+    
         heroTitle.style.animation = "none";
         heroDescription.style.animation = "none";
         void heroTitle.offsetWidth; // Trigger reflow
         void heroDescription.offsetWidth;
-
-        heroTitle.textContent = currentData.caption;
-        heroDescription.textContent = currentData.description;
-
+    
         heroTitle.style.animation = "slide-up 2s ease forwards";
         heroDescription.style.animation = "slide-up 2s ease forwards 0.2s";
-
+    
+        const galleryImages = imageGallery.querySelectorAll('.gallery-image');
+    
         // Highlight the active image in the gallery
         galleryImages.forEach((img, index) => {
             img.classList.toggle('active', index === currentIndex);
         });
-
+    
         // Adjust gallery scroll to center the active image
         const offset = Math.max(0, currentIndex * (galleryImages[0].offsetWidth + 16) - imageGallery.offsetWidth / 2 + galleryImages[0].offsetWidth / 2);
         imageGallery.style.transform = `translateX(-${offset}px)`;
     };
+    
 
     const startImageCycle = () => {
         updateHeroContent();
@@ -108,13 +101,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 5000);
     };
 
-    galleryImages.forEach((img, index) => {
-        img.addEventListener('click', () => {
+    imageGallery.addEventListener('click', (event) => {
+        if (event.target.classList.contains('gallery-image')) {
             clearInterval(backgroundInterval); // Stop the automatic slideshow
-            currentIndex = index; // Update current index
+            currentIndex = Array.from(imageGallery.children).indexOf(event.target); // Update current index
             updateHeroContent(); // Update the hero section content
             startImageCycle(); // Restart the slideshow
-        });
+        }
     });
 
     startImageCycle();
@@ -180,6 +173,17 @@ setupMetricsSectionAnimation();
 document.querySelectorAll('.sticky-section').forEach(section => {
     const cards = section.querySelectorAll('.sticky-card');
     const container = section.querySelector('.sticky-cards-grid');
+
+    // Add hover effect
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-15px)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+        });
+    });
 
     // Add event listeners only to the cards in the current section
     cards.forEach(card => {

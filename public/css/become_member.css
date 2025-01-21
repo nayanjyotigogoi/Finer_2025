@@ -1,0 +1,243 @@
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    /* font-size: small; */
+}
+
+
+.member-become-member-btn1 {
+    background-color: rgba(42, 48, 130, 1);
+    color: white;
+    padding: 14px 22px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.member-become-member-btn {
+    background-color: #ff8c00;
+    color: white;
+    padding: 14px 22px;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+/* Hero Section */
+.member-hero {
+    position: relative;
+    height: 400px; /* Adjust the height as per your design */
+    overflow: hidden; /* Hide any parts of the image that go beyond the container */
+}
+
+.member-hero img {
+    position: absolute; /* Position it within the container */
+    top: 0;
+    left: 0;
+    width: 100%;  /* Ensure the image spans the entire width */
+    height: 100%; /* Ensure the image spans the entire height */
+    object-fit: cover; /* Make sure the image covers the container without stretching */
+    z-index: -1; /* Push the image behind the text */
+}
+
+.member-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(42, 47, 110, 0.7);
+}
+
+.member-member-header {
+    color: #FFA500;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px;
+}
+
+.member-title {
+    color: #1a1a4b;
+    font-size: 26px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-bottom: 20px;
+}
+
+
+.member-header1 {
+    font-weight: bold;
+    font-size: 26px;
+    color: #1a1a4b;
+}
+.member-header2 {
+    font-size: 14px;
+    color: #1a1a4b;
+}
+
+.member-hero h2 {
+    color: #FFA500;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.member-hero h1 {
+    font-weight: bold;
+    position: relative;
+    color: white;
+    font-size: 3rem;
+    z-index: 1; /* Ensure the text stays above the image */
+    text-align: center; /* Optional: Center the text */
+    margin: 0;
+    padding-top: 150px; /* Adjust the padding to vertically position the text */
+}
+
+/* Main Content */
+.member-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.member-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    text-align: left;
+}
+
+th {
+    background-color: #f8f9fa;
+}
+
+/* Document Sections */
+.member-info-sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.member-info-box {
+    color: #1a1a4b;
+    border: 1px solid #ddd;
+    padding: 3.5rem;
+    border-radius: 4px;
+}
+
+.member-info-box h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.member-header3-info-box {
+    line-height: 25.2px;
+    color: rgba(112, 112, 113, 1);
+}
+
+.member-paragraph-info-box {
+    line-height: 25.2px;
+    color: rgba(112, 112, 113, 1);
+}
+
+/* Contact Form Styling */
+.member-contact-section {
+    text-align: center;
+    max-width: 600px;
+    margin: 3rem auto;
+}
+
+.member-contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 3px 6px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.member-contact-form div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+.member-contact-form label {
+    font-weight: bold;
+    color: rgba(84, 84, 84, 1);
+    margin-bottom: 0.2rem;
+}
+
+.member-contact-form textarea {
+    width: 100%; /* Make the textarea span the full width */
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    resize: vertical; /* Allow vertical resizing */
+    text-align: center; /* Center the text inside the textarea */
+}
+
+.member-contact-form .form-full-width {
+    grid-column: 1 / -1; /* Ensure the textarea spans the entire form width */
+}
+
+
+
+.member-contact-form input,
+.member-contact-form textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.member-contact-form input:focus,
+.member-contact-form textarea:focus {
+    border-color: #ff8c00;
+    outline: none;
+    box-shadow: 0 0 4px rgba(255, 140, 0, 0.5);
+}
+
+.member-submit-btn {
+    background-color: #ff8c00;
+    box-shadow: 0 0 4px rgb(255, 140, 0);
+    color: white;
+    border: none;
+    margin-left: 80%;
+    padding: 0.4rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.member-submit-btn:hover {
+    background-color: #e67e00;
+    transform: scale(1.05);
+}
+
+html {
+    scroll-behavior: smooth;
+}

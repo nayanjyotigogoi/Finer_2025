@@ -1,0 +1,230 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    /* font-size: small; */
+}
+
+.main-section{
+    margin: 70px;
+}
+
+        /* Hero Section */
+.member-hero {
+    position: relative;
+    height: 400px; /* Adjust the height as per your design */
+    overflow: hidden; /* Hide any parts of the image that go beyond the container */
+    margin-bottom: 60px;
+}
+
+.member-hero img {
+    position: absolute; /* Position it within the container */
+    top: 0;
+    left: 0;
+    width: 100%;  /* Ensure the image spans the entire width */
+    height: 100%; /* Ensure the image spans the entire height */
+    object-fit: cover; /* Make sure the image covers the container without stretching */
+    z-index: -1; /* Push the image behind the text */
+}
+
+.member-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(42, 47, 110, 0.7);
+}
+
+.member-hero h1 {
+    font-weight: bold;
+    position: relative;
+    color: white;
+    font-size: 28px;
+    z-index: 1; /* Ensure the text stays above the image */
+    text-align: center; /* Optional: Center the text */
+    margin: 0;
+    padding-top: 180px; /* Adjust the padding to vertically position the text */
+}
+
+        .main-heading {
+            color: #1a237e;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            max-width: 700px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .text-content {
+            font-size: 14px;
+            line-height: 1.7rem;
+            color: rgba(112, 112, 113, 1);
+            flex: 2;
+            
+        }
+
+        .text-content p {
+            margin-bottom: 0.8rem; /* Adds minimum spacing between paragraphs */
+        }
+        
+        .image-container {
+            position: flex;
+            top: 0;
+            left: 0;
+            width: 450px;
+            height: 430px;
+            object-fit: cover;
+            border-radius: 10px;
+            z-index: 2;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(255, 165, 0, 0.8);
+            }
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        
+        .section p{
+            font-size: 14px;
+            padding-left: 20px;
+            color: rgba(112, 112, 113, 1);
+        }
+      
+
+        .section-title {
+            color: #ff9800;
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    
+
+        .mission-canvas-wrapper {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+            margin-bottom: 40px;
+        }
+
+        .mission-section {
+           
+            flex: 2;
+        }
+
+        .mission-title {
+            color: #ff9800;
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mission-list {
+            list-style: none;
+        }
+
+        .mission-list li {
+            color: rgba(112, 112, 113, 1);
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .mission-list li:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            background: #ff9800;
+            border-radius: 50%;
+        }
+
+        .sectors-container {
+            flex: 1;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+        }
+
+        .committee-section {
+            margin-top: 60px;
+        }
+
+        .committee-title {
+            color: #ff9800;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .committee-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .committee-item {
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .committee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .committee-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .content-wrapper {
+                flex-direction: column;
+            }
+
+            .mission-canvas-wrapper {
+                flex-direction: column;
+            }
+
+            .committee-grid {
+                grid-template-columns: 1fr;
+            }
+        }
