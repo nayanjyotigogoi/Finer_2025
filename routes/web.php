@@ -9,6 +9,7 @@ use App\Http\Controllers\PressReleaseController;
 use App\Http\Controllers\PastPresidentController;
 use App\Http\Controllers\DirectorProfilesController;
 use App\Http\Controllers\DirectorsPresidentsController;
+use App\Http\Controllers\AdminDashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,14 +25,11 @@ Route::get('/test', function () {
     return view('welcome');
 });
 
-Route::get('/admin', function () {
-    return view('admin.index');
-});
-
 //Route for home section
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //admin routes
+Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.index');
 
 //banner controller route admin routes
 Route::prefix('admin')->group(function () {
@@ -113,6 +111,6 @@ Route::get('/directors-&-past-presidents', [DirectorsPresidentsController::class
 
 Route::get('/upcoming-events', [EventController::class, 'upcoming_events'])->name('events.upcoming');
 
-Route::get('/past-events', [EventController::class, 'past_events'])->name('events.upcoming');
+Route::get('/past-events', [EventController::class, 'past_events'])->name('events.past');
 
 
