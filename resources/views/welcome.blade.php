@@ -1,272 +1,186 @@
-<style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magazines</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
+        .header {
+            background: linear-gradient(45deg, #000066, #000099);
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
 
-    /* Past Presidents Style */
+        .wave-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg');
+            background-size: cover;
+            opacity: 0.1;
+        }
 
-.past-presidents-section {
-    overflow-x: hidden;
-    background: #fff;
-    position: relative;
-}
+        .header h1 {
+            position: relative;
+            color: white;
+            text-align: center;
+            padding-top: 100px;
+            font-size: 2.5rem;
+        }
 
-.past-presidents-section::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
-}
+        .press-release {
+            color: #FF9900;
+            padding: 20px;
+            margin: 20px;
+            font-size: 1.5rem;
+        }
 
-/* Background Shapes */
-.past-presidents-shape {
-    position: absolute;
-    border-radius: 100%;
-    z-index: -1;
-}
+        .magazine-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-.past-presidents-shape-1 {
-    width: 400px;
-    height: 400px;
-    border: 40px solid rgba(255, 165, 0, 0.1);
-    top: -250px;
-    left: -200px;
-}
+        .magazine-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-.past-presidents-shape-2 {
-    width: 300px;
-    height: 300px;
-    border: 30px solid rgba(255, 165, 0, 0.1);
-    bottom: -1px;
-    right: -150px;
-}
+        .magazine-image {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
 
-.past-presidents-container {
-    max-width: 1200px;
-    margin: 50px auto;
-    padding: 40px 20px;
-    text-align: center;
-}
+        .download-btn {
+            background-color: #FF9900;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-top: 10px;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
 
-.past-presidents-section-title {
-    color: #FFA500;
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
+        .download-btn:hover {
+            background-color: #FF8800;
+        }
 
-.past-presidents-main-title {
-    color: #1a1a4b;
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
 
-.past-presidents-description {
-    color: #666;
-    max-width: 800px;
-    margin: 0 auto 40px;
-    line-height: 1.6;
-}
+        .pagination button {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+        }
 
-.past-presidents-carousel {
-    position: flex;
-    padding: 100px 50px;
-    height: 500px;
-    overflow: hidden;
-}
+        .pagination button.active {
+            background: #000;
+            color: white;
+        }
 
-.past-presidents-carousel-container {
-    display: flex;
-    margin-top: 60px;
-    transition: transform 0.5s ease;
-    gap: 80px;
-    position: relative;
-}
+        @media (max-width: 768px) {
+            .magazine-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
 
-.past-presidents-card {
-    flex: 0 0 30%; /* Show 3 items */
-    max-width: 300px;
-    border: 2px solid #FFA500;
-    border-radius: 5px;
-    padding: 20px;
-    position: relative;
-    transition: all 0.5s ease;
-    transform: scale(0.8);
-    opacity: 0.7;
-    background: white;
-    margin-bottom: 50px;
-}
+        @media (max-width: 480px) {
+            .magazine-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="wave-pattern"></div>
+        <h1>Magazines</h1>
+    </header>
 
-.past-presidents-card.active {
-    transform: scale(1.1);
-    opacity: 1;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
+    <h2 class="press-release">Press Release</h2>
 
-.past-presidents-profile-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    margin: -80px auto 20px;
-    border: 2px solid #FFA500;
-    object-fit: cover;
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-}
+    <div class="magazine-grid">
+        <!-- Repeated 6 times for the grid -->
+        <div class="magazine-card">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="FINER News & Views" class="magazine-image">
+            <a href="#" class="download-btn">↓ Download</a>
+        </div>
+        <div class="magazine-card">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="FINER News & Views" class="magazine-image">
+            <a href="#" class="download-btn">↓ Download</a>
+        </div>
+        <div class="magazine-card">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="FINER News & Views" class="magazine-image">
+            <a href="#" class="download-btn">↓ Download</a>
+        </div>
+        <div class="magazine-card">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="FINER News & Views" class="magazine-image">
+            <a href="#" class="download-btn">↓ Download</a>
+        </div>
+        <div class="magazine-card">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="FINER News & Views" class="magazine-image">
+            <a href="#" class="download-btn">↓ Download</a>
+        </div>
+        <div class="magazine-card">
+            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="FINER News & Views" class="magazine-image">
+            <a href="#" class="download-btn">↓ Download</a>
+        </div>
+    </div>
 
-.past-presidents-card-title {
-    color: #1a1a4b;
-    font-size: 18px;
-    margin-top: 50px;
-    margin-bottom: 10px;
-}
+    <div class="pagination">
+        <button>← Back</button>
+        <button>1</button>
+        <button class="active">2</button>
+        <button>3</button>
+        <button>4</button>
+        <button>5</button>
+        <button>Next →</button>
+    </div>
 
-.past-presidents-card-subtitle {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 15px;
-}
-
-.past-presidents-card-description {
-    color: #444;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.past-presidents-nav-button {
-    position: absolute;
-    top: 60%;
-    transform: translateY(-50%);
-    background: #FFA500;
-    border: none;
-    color: white;
-    width: 40px;
-    height: 40px;
-    cursor: pointer;
-    border-radius: 50%;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.3s ease;
-    z-index: 2;
-}
-
-.past-presidents-nav-button:hover {
-    background: #ff8c00;
-}
-
-.past-presidents-prev {
-    left: 50px;
-}
-
-.past-presidents-next {
-    right: 50px;
-}
-
-.past-presidents-dots {
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-    gap: 8px;
-}
-
-.past-presidents-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #ddd;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.past-presidents-dot.active {
-    background: #FFA500;
-}
-
-
-@keyframes slideInLeft {
-    from {
-        transform: translateX(100%) scale(0.8);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0) scale(0.8);
-        opacity: 0.7;
-    }
-}
-
-@keyframes slideInRight {
-    from {
-        transform: translateX(-100%) scale(0.8);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0) scale(0.8);
-        opacity: 0.7;
-    }
-}
-
-@keyframes slideOutLeft {
-    from {
-        transform: translateX(0) scale(0.8);
-        opacity: 0.7;
-    }
-    to {
-        transform: translateX(-100%) scale(0.8);
-        opacity: 0;
-    }
-}
-
-@keyframes slideOutRight {
-    from {
-        transform: translateX(0) scale(0.8);
-        opacity: 0.7;
-    }
-    to {
-        transform: translateX(100%) scale(0.8);
-        opacity: 0;
-    }
-}
-
-.slide-in-left {
-    animation: slideInLeft 0.5s forwards;
-}
-
-.slide-in-right {
-    animation: slideInRight 0.5s forwards;
-}
-
-.slide-out-left {
-    animation: slideOutLeft 0.5s forwards;
-}
-
-.slide-out-right {
-    animation: slideOutRight 0.5s forwards;
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 1000px) {
-    .past-presidents-carousel {
-        max-width: 700px;
-    }
-    .past-presidents-card {
-        flex: 0 0 250px;
-        max-width: 250px;
-    }
-}
-
-@media (max-width: 768px) {
-    .past-presidents-carousel {
-        max-width: 300px;
-    }
-    .past-presidents-card {
-        flex: 0 0 260px;
-        max-width: 260px;
-        margin: 0 10px;
-    }
-}
-
-
-</style>
+    <script>
+        // Add click handlers for pagination
+        document.querySelectorAll('.pagination button').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.pagination button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                // Add active class to clicked button if it's a number
+                if (!this.textContent.includes('←') && !this.textContent.includes('→')) {
+                    this.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

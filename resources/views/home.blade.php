@@ -402,8 +402,10 @@
                         @endforeach
                     </div>
                 </div>
-                <a class="twitter-timeline" data-width="450" data-height="500" href="https://twitter.com/XDevelopers?ref_src=twsrc%5Etfw">Tweets by XDevelopers</a>
+                <a class="twitter-timeline" data-width="450" data-height="500" href="https://twitter.com/FINERIndia?ref_src=twsrc%5Etfw">Tweets by FINERIndia</a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+             
             </div>
             <div class="blog-nav">
                 <span class="blog-dot active"></span>

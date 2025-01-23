@@ -1,0 +1,160 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    /* font-size: small; */
+}
+    
+
+.header {
+    position: relative;
+    height: 400px; /* Adjust the height as per your design */
+    overflow: hidden; /* Hide any parts of the image that go beyond the container */
+    margin-bottom: 60px;
+}
+
+.header img {
+    position: absolute; /* Position it within the container */
+    top: 0;
+    left: 0;
+    width: 100%;  /* Ensure the image spans the entire width */
+    height: 100%; /* Ensure the image spans the entire height */
+    object-fit: cover; /* Make sure the image covers the container without stretching */
+    z-index: -1; /* Push the image behind the text */
+}
+
+.header h1 {  
+    color: white;
+    text-align: center;
+    padding-top: 180px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 20px;
+}
+
+.press-release {
+  
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    color: #FF9900;
+    padding: 20px;
+    margin: 20px;
+  
+}
+
+.magazine-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.magazine-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.magazine-image {
+    width: 100%;
+    height: 350px;
+    border-radius: 4px;
+}
+.magazine-content{
+    margin: 20px;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 1.5; 
+        color: #FF9900;
+        text-decoration: none;
+   
+}
+
+.magazine-content p{
+    margin: 10px 0;
+    line-height: 1.5;
+    color: #666;
+    font-size: 14px;
+
+   
+}
+
+.download-btn {
+    background-color: #FF9900;
+    color: white;
+    border: none;
+    padding: 7px 20px;
+    border-radius: 4px;
+    margin-top: 50px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.download-btn:hover {
+    background-color: #FF8800;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 50px auto;
+}
+
+.pagination p{  
+    margin: 10px ;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 8px 12px;
+    background-color: #FF9800;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #e68900;
+}
+
+.pagination.active-page {
+    background-color: #FF9800;
+    color: white;
+}
+
+@keyframes waveMove {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 50px 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .magazine-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .magazine-grid {
+        grid-template-columns: 1fr;
+    }
+}

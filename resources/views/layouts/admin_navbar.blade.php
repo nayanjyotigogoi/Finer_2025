@@ -159,6 +159,27 @@
         </ul>
       </li><!-- End Tables Nav -->
 
+       <!-- Magazines Section -->
+       <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#magazines-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-book"></i><span>Magazines</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="magazines-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="{{ route('magazines.view') }}">
+              <i class="bi bi-list-ul"></i><span>View Magazines</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('magazines.create') }}">
+              <i class="bi bi-plus-circle"></i><span>Add Magazine</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Magazines Nav -->
+
+
+
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
         <i class="bi bi-people"></i><span>Board Members</span><i class="bi bi-chevron-down ms-auto"></i>

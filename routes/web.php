@@ -10,6 +10,7 @@ use App\Http\Controllers\PastPresidentController;
 use App\Http\Controllers\DirectorProfilesController;
 use App\Http\Controllers\DirectorsPresidentsController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\MagazineController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,7 +83,7 @@ Route::prefix('admin')->group(function () {
 });
 
 
-
+//route for past preidents
 Route::get('past_presidents', [PastPresidentController::class, 'view'])->name('past_presidents.view');
 Route::get('past_presidents/create', [PastPresidentController::class, 'create'])->name('past_presidents.create');
 Route::post('past_presidents', [PastPresidentController::class, 'store'])->name('past_presidents.store');
@@ -90,6 +91,26 @@ Route::get('past_presidents/{past_president}/edit', [PastPresidentController::cl
 Route::put('past_presidents/{past_president}', [PastPresidentController::class, 'update'])->name('past_presidents.update');
 Route::delete('past_presidents/{past_president}', [PastPresidentController::class, 'destroy'])->name('past_presidents.destroy');
 
+//route for magazines
+Route::prefix('admin')->group(function () {
+    // Route to view magazines
+    Route::get('/magazines', [MagazineController::class, 'index'])->name('magazines.view');
+
+    // Route to create a magazine
+    Route::get('/magazines/create', [MagazineController::class, 'create'])->name('magazines.create');
+
+    // Route to store a new magazine
+    Route::post('/magazines', [MagazineController::class, 'store'])->name('magazines.store');
+
+    // Route to edit a magazine
+    Route::get('/magazines/edit/{id}', [MagazineController::class, 'edit'])->name('magazines.edit');
+
+    // Route to update a magazine
+    Route::put('/magazines/update/{id}', [MagazineController::class, 'update'])->name('magazines.update');
+
+    // Route to delete a magazine
+    Route::delete('/magazines/delete/{id}', [MagazineController::class, 'destroy'])->name('magazines.destroy');
+});
 
 
 Route::get('/become-a-member', function () {
@@ -125,6 +146,8 @@ Route::get('/Contact-Us', function () {
     return view('Contact_us'); 
 });
 
+//route for magazine 
+Route::get('/magazines', [MagazineController::class, 'magazines']);
 
 
 

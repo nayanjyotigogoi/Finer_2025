@@ -49,9 +49,9 @@
     </div>
 
         <!-- Pagination Links -->
-<div class="pagination">
-    {{ $events->links() }} <!-- This generates the pagination links -->
-</div>
+    <div class="pagination">
+        {{ $events->links() }} <!-- This generates the pagination links -->
+    </div>
 
 @endsection
 @push('scripts')

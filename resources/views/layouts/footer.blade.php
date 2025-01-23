@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 body {
@@ -27,10 +29,11 @@ body {
 }
 
 .logo img {
-    width: 220px;
+    width: 110px;
 }
 
 .footer-section {
+    width: 110px;
     margin-right: 40px;
 }
 
@@ -161,10 +164,15 @@ body {
         <div class="footer-section">
             <h3>Social</h3>
             <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61560848374018" target="_blank">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://linkedin.com/in/federation-of-industry-and-commerce-of-north-eastern-region-finer-a4343550" target="_blank">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://x.com/FINERIndia" target="_blank">
+                    <i class="fas fa-times"></i>
+                </a>
             </div>
         </div>
     </div>

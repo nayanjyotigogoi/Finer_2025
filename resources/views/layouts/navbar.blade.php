@@ -159,7 +159,15 @@
                     <li><a href="{{ url('/past-events')}}">Past Events</a></li>
                 </ul>
             </li>
-            <li><a href="#knowledge">Knowledge</a></li>
+            <li class="dropdown">
+                <a href="#Knowledge">
+                Knowledge <span class="dropdown-icon">▼</span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{url('/magazines')}}">Magazines</a></li>
+                </ul>
+            </li>
+            
             <li><a href="{{ url('/press-releases')}}">Publications</a></li>
             <li><a href="#gallery">Gallery</a></li>
             <li><a href="{{url('/Contact-Us')}}">Contact Us</a></li>
