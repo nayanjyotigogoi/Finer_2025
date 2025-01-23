@@ -11,6 +11,7 @@ use App\Http\Controllers\DirectorProfilesController;
 use App\Http\Controllers\DirectorsPresidentsController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\MagazineController;
+use App\Http\Controllers\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,12 +27,27 @@ Route::get('/test', function () {
     return view('welcome');
 });
 
+//login route
+
+// Route::get('/login', function () {
+//     return view('admin.login');
+// });
+
+Route::get('/login', [LoginController::class, 'index']);
+Route::post('/login', [LoginController::class,'login'])->name('login');
+Route::post('/logout', [LoginController::class, 'destroy'])->name('admin.logout');
+
 //Route for home section
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-//admin routes
-Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.index');
 
+//ADMIN routes
+
+Route::middleware(['auth', 'preventBackHistory'])->group(function(){
+    //admin routes
+    Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin.index');
+
+    
 //banner controller route admin routes
 Route::prefix('admin')->group(function () {
     Route::get('/banners', [BannerController::class, 'view'])->name('banners.view');
@@ -112,6 +128,8 @@ Route::prefix('admin')->group(function () {
     Route::delete('/magazines/delete/{id}', [MagazineController::class, 'destroy'])->name('magazines.destroy');
 });
 
+
+});
 
 Route::get('/become-a-member', function () {
     return view('become_member'); // Assuming the Blade view is 'resources/views/become_member.blade.php'

@@ -73,17 +73,18 @@ body {
     border-radius: 4px;
 }
 .magazine-content{
+    text-align: center;
     margin: 20px;
     font-weight: bold;
     font-size: 18px;
-    line-height: 1.5; 
-        color: #FF9900;
-        text-decoration: none;
+    /* line-height: 1.5;  */
+    color: #FF9900;
+    text-decoration: none;
    
 }
 
 .magazine-content p{
-    margin: 10px 0;
+    margin: 6px 0;
     line-height: 1.5;
     color: #666;
     font-size: 14px;
@@ -97,7 +98,7 @@ body {
     border: none;
     padding: 7px 20px;
     border-radius: 4px;
-    margin-top: 50px;
+    margin-top: 20px;
     cursor: pointer;
     width: 100%;
     text-align: center;
