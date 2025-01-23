@@ -12,7 +12,7 @@
 
         <!-- Hero Section -->
         <section class="hero">
-            <div class="container">
+            <div class="hero-container">
                 <main class="main-content">
                     <!-- Hero Section -->
                     <section class="hero" id="heroSection">

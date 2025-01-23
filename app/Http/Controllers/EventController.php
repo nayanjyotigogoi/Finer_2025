@@ -112,7 +112,7 @@ class EventController extends Controller
     public function upcoming_events(){
 
         // Fetch only active events sorted by their order
-        $events = Event::where('status', 1)->orderBy('order', 'asc')->get();
+        $events = Event::where('status', 1)->orderBy('order', 'asc')->paginate(6);
 
         // Fetch the banner with `status = 1`
         $banner = Banner::where('status', 1)->orderBy('order', 'asc')->first();
@@ -122,7 +122,7 @@ class EventController extends Controller
 
     public function past_events(){
 
-        $events = Event::where('status', 0)->orderBy('order', 'asc')->get();
+        $events = Event::where('status', 0)->orderBy('order', 'asc')->paginate(6);
         
         return view('event_page.past_event', compact('events'));
     }

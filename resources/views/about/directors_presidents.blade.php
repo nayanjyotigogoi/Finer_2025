@@ -10,32 +10,42 @@
     <img src="assests/about-us-bg.jpg" alt="Background Image">
 </div>
 
-
+<div class="container">
     <section class="BOD-section">
+        <!-- Background Shapes -->
+        <div class="BOD-shape BOD-shape-1"></div>
+        <div class="BOD-shape BOD-shape-2"></div>
+
         <div class="BOD-container">
-            <h2 class="BOD-section-title">Board of Directors</h2>
+            <div class="BOD-section-title">// Our Board of Directors</div>
             <div class="BOD-carousel">
-                <button class="BOD-nav-button BOD-prev" data-target="directors-container">❮</button>
-                <div class="BOD-carousel-container" id="directors-container">
-                    <!-- Dynamic content will be inserted here -->
+                <button class="BOD-nav-button BOD-prev">❮</button>
+                <button class="BOD-nav-button BOD-next">❯</button>
+                <div class="BOD-carousel-container" id="BOD-data-container">
+                    <!-- Cards will be dynamically inserted here by JavaScript -->
                 </div>
-                <button class="BOD-nav-button BOD-next" data-target="directors-container">❯</button>
             </div>
         </div>
     </section>
 
-    <section class="BOD-section">
-        <div class="BOD-container">
-            <h2 class="BOD-section-title">Past Presidents</h2>
-            <div class="BOD-carousel">
-                <button class="BOD-nav-button BOD-prev" data-target="presidents-container">❮</button>
-                <div class="BOD-carousel-container" id="presidents-container">
-                    <!-- Dynamic content will be inserted here -->
+    <section class="past-presidents-section"> 
+        <!-- Background Shapes -->
+        <div class="past-presidents-shape past-presidents-shape-1"></div>
+        <div class="past-presidents-shape past-presidents-shape-2"></div>
+
+        <div class="past-presidents-container">
+            <div class="past-presidents-section-title">// Past Presidents</div>
+            <div class="past-presidents-carousel">
+                <button class="past-presidents-nav-button past-presidents-prev">❮</button>
+                <button class="past-presidents-nav-button past-presidents-next">❯</button>
+                <div class="past-presidents-carousel-container" id="past-presidents-data-container">
+                    <!-- Cards will be dynamically inserted here by JavaScript -->
                 </div>
-                <button class="BOD-nav-button BOD-next" data-target="presidents-container">❯</button>
             </div>
         </div>
     </section>
+</div>
+
 @endsection
 
 @push('scripts')

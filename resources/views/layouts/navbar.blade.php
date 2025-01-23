@@ -146,7 +146,7 @@
                 <ul class="dropdown-menu">
                     <li><a href="{{ url('/about-us') }}">About Us</a></li>
                     <li><a href="{{ url('/finer-foundation')}}">Finer Foundation</a></li>
-                    <li><a href="{{ url('/directors-&-past-presidents')}}">Directors</a></li>
+                    <li><a href="{{ url('/directors-&-past-presidents')}}">Directors & Past Presidents</a></li>
                 </ul>
             </li>
             <li><a href="#initiative">Initiative</a></li>
@@ -160,9 +160,9 @@
                 </ul>
             </li>
             <li><a href="#knowledge">Knowledge</a></li>
-            <li><a href="#publications">Publications</a></li>
+            <li><a href="{{ url('/press-releases')}}">Publications</a></li>
             <li><a href="#gallery">Gallery</a></li>
-            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="{{url('/Contact-Us')}}">Contact Us</a></li>
         </ul>
         <button class="member-btn">Become a Member</button>
     </nav>

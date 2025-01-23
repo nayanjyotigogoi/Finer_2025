@@ -23,19 +23,35 @@
 
         <section class="events-section">
             <h2>Upcoming Events</h2>
-            <div class="events-list" id="eventsList"></div>
+            <div class="events-list" id="eventsList">
+                @foreach($events as $event)
+                    <div class="event-card">
+                    <div class="date-badge">
+                                <span class="month">{{ \Carbon\Carbon::parse($event->event_date)->format('M') }}</span>
+                                <span class="day">{{ \Carbon\Carbon::parse($event->event_date)->format('d') }}</span>
+                            </div>
+                        <img src="{{ asset('storage/'. $event->image) }}" alt="Event Image" class="event-image">
+                        <div class="event-content">
+                            <h3 class="event-title">{{ $event->title }}</h3>
+                            <p class="event-date">{{ $event->start_date }}</p>
+                            <p class="event-description">
+                                {{ $event->description }}
+                            </p>
+
+                            <button class="read-more" onclick="toggleDescription('{{ $event->id }}')">Read More</button>
+
+                        </div>
+                      
+                    </div>
+                @endforeach
+            </div>
         </section>
     </div>
 
-        <div class="pagination">
-            <button onclick="changePage('prev')">← Back</button>
-            <button class="active">1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
-            <button onclick="changePage('next')">Next →</button>
-        </div>
+        <!-- Pagination Links -->
+<div class="pagination">
+    {{ $events->links() }} <!-- This generates the pagination links -->
+</div>
 
 @endsection
 @push('scripts')

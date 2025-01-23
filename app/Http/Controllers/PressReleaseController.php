@@ -123,4 +123,13 @@ class PressReleaseController extends Controller
 
         return redirect()->route('press_releases.view')->with('success', 'Press release deleted successfully.');
     }
+    public function view_press_releases() {
+        // Fetch press releases with pagination (6 per page)
+        $pressReleases = press_release::where('status', '1')->paginate(3);
+
+    
+        // Pass the paginated data to the view
+        return view('publications.press_release', compact('pressReleases'));
+    }
+    
 }

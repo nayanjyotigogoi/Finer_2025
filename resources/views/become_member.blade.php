@@ -9,7 +9,7 @@
 
 <div class="member-hero">
     <h1>Become A Member</h1>
-    <img src="assests/member-bg.jpg" alt="Background Image">
+    <img src="assests/about-us-bg.jpg" alt="Background Image">
 </div> 
 
 <main class="member-container">
@@ -17,7 +17,10 @@
         <div class="member-header-actions">
             <h2 class="member-header1">Criteria for becoming a member</h2>
             <div>
-                <a href="path-to-your-application-form.pdf" class="member-become-member-btn1" download>Download Application form</a>
+            <a href="path-to-your-application-form.pdf" class="member-become-member-btn1" download>
+                <i class="fa fa-download"></i> Download Application Form
+            </a>
+
                 <a href="#contact" class="member-become-member-btn" style="margin-left: 1rem;">Enquire Now</a>
             </div>
         </div>

@@ -11,21 +11,37 @@
     </div>
 
     <div class="container-event">
-        <section class="featured-event">
+     
+        <section class="events-section">
             <h2>Past Events</h2>
-            <div class="events-list" id="eventsList"></div>
+            <div class="events-list" id="eventsList">
+                @foreach($events as $event)
+                    <div class="event-card">
+                        <img src="{{ asset('storage/'. $event->image) }}" alt="Event Image" class="event-image">
+                        <div class="event-content">
+                            <h3 class="event-title">{{ $event->title }}</h3>
+                            <p class="event-date">{{ $event->start_date }}</p>
+                            <p class="event-description">
+                                {{ $event->description }}
+                            </p>
+
+                            <button class="read-more" onclick="toggleDescription('{{ $event->id }}')">Read More</button>
+
+                        </div>
+                      
+                    </div>
+                @endforeach
+            </div>
+            </div>
+            </div>
         </section>
     </div>
 
+        <!-- Pagination Links -->
     <div class="pagination">
-            <button onclick="changePage('prev')">← Back</button>
-            <button class="active">1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
-            <button onclick="changePage('next')">Next →</button>
-        </div>
+        {{ $events->links() }} <!-- This generates the pagination links -->
+    </div>
+
 @endsection
 @push('scripts')
 <script>

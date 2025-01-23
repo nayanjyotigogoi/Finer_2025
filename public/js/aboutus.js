@@ -45,7 +45,7 @@ function drawSectorsDiagram() {
         ctx.translate(labelX, labelY);
         ctx.rotate(labelAngle + Math.PI / 2);
         ctx.fillStyle = '#fff';
-        ctx.font = '12px Arial';
+        ctx.font = '16px Arial';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(sector.label, 0, 0);
@@ -58,7 +58,7 @@ function drawSectorsDiagram() {
     ctx.fill();
 
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 20px Arial';
+    ctx.font = 'bold 24px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText('SECTORS', centerX, centerY);

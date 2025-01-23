@@ -103,8 +103,11 @@ Route::view('/about-us', 'about.aboutus');
 // Finer Foundation page
 Route::view('/finer-foundation', 'about.finer_foundation');
 
-// Directors & Past Presidents page route
-Route::get('/directors-&-past-presidents', [DirectorsPresidentsController::class, 'directors']);
+// route for board of directors in the Directors & Past Presidents page 
+
+
+//route for the Past Presidents section in the directors_presidents page
+Route::get('/directors-&-past-presidents', [PastPresidentController::class, 'past_presidents']);
 
 
 //routes for events page
@@ -112,5 +115,16 @@ Route::get('/directors-&-past-presidents', [DirectorsPresidentsController::class
 Route::get('/upcoming-events', [EventController::class, 'upcoming_events'])->name('events.upcoming');
 
 Route::get('/past-events', [EventController::class, 'past_events'])->name('events.past');
+
+// Route to display the press release.
+// view_press_releases
+Route::get('/press-releases', [PressReleaseController::class, 'view_press_releases']);
+
+//route for contact us form in the navbar
+Route::get('/Contact-Us', function () {
+    return view('Contact_us'); 
+});
+
+
 
 

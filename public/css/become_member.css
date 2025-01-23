@@ -58,6 +58,13 @@ body {
     margin: 20px;
 }
 
+.member-member-header-page{
+    color: #FFA500;
+    font-size: 24px;
+    font-weight: bold;
+    margin-left: 100px;
+}
+
 .member-title {
     color: #1a1a4b;
     font-size: 26px;
@@ -87,11 +94,11 @@ body {
     font-weight: bold;
     position: relative;
     color: white;
-    font-size: 3rem;
+    font-size: 28px;
     z-index: 1; /* Ensure the text stays above the image */
     text-align: center; /* Optional: Center the text */
     margin: 0;
-    padding-top: 150px; /* Adjust the padding to vertically position the text */
+    padding-top: 180px; /* Adjust the padding to vertically position the text */
 }
 
 /* Main Content */
@@ -133,12 +140,39 @@ th {
     margin-bottom: 2rem;
 }
 
+.member-info-sections-page {
+    text-align: center; /* Center align text inside the div */
+    padding: 20px;
+    background-color: #ffffff; /* Background color for the box */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for styling */
+    border-radius: 8px; /* Rounded corners */
+    max-width: 400px; /* Max width for the box */
+    width: 100%; /* Full width for smaller screens */
+  
+}
+
+.member-member-header-page {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FFA500; /* Text color */
+    margin: 40px;
+}
+
+.member-info-box1 {
+  
+    border: 1px solid #ddd;
+    padding: 3.5rem;
+    border-radius: 4px;
+}
+
 .member-info-box {
     color: #1a1a4b;
     border: 1px solid #ddd;
     padding: 3.5rem;
     border-radius: 4px;
 }
+
+
 
 .member-info-box h3 {
     font-size: 18px;
@@ -183,6 +217,7 @@ th {
 }
 
 .member-contact-form label {
+    font-size: 18px;
     font-weight: bold;
     color: rgba(84, 84, 84, 1);
     margin-bottom: 0.2rem;
@@ -210,7 +245,7 @@ th {
     padding: 0.6rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 12px;
 }
 
 .member-contact-form input:focus,

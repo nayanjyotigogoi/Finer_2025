@@ -61,7 +61,7 @@
         }
 
         .events-section h2{
-            margin-top: 100px;
+       
             font-size: 28px;
             font-weight: bold;
             color: #FF9900;
@@ -94,19 +94,37 @@
         }
 
         .event-image {
-            width: 100%;
+            width: 350px;
             height: 100%;
             object-fit: cover;
+        }
+
+        .read-more{
+          
+            display: inline-block; /* Prevent full width */
+            padding: 0.8rem 2rem; /* Button padding */
+            background: #ffa726; /* Button background color */
+            color: white; /* Button text color */
+            text-decoration: none; /* Remove underline */
+            border-radius: 5px; /* Rounded corners */
+            font-weight: bold; /* Bold text */
+            transition: transform 0.3s ease; /* Smooth hover effect */
+            max-width: max-content; /* Ensure the width matches the content */
+            text-align: center; /* Center the text */
+        }
+
+        .read-more:hover {
+            background: #ff9100;
         }
 
         .date-badge {
             position: absolute;
             top: -3px;
-            left: 10px;
+            left: 20px;
             background-color: #ff9933;
             color: white;
-            padding: 16px 12px;
-            border-radius: 0px 0px 10px 10px;
+            padding: 15px;
+            border-radius: 0px 0px 14px 14px;
             text-align: center;
             font-weight: 500;
         }
@@ -159,21 +177,29 @@
         .pagination {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 40px;
-            margin-bottom: 40px;
+            margin: 50px auto;
         }
 
-        .pagination button {
+        .pagination p{  
+            margin: 10px ;
+        }
+        
+        .pagination a {
+            margin: 0 5px;
             padding: 8px 12px;
-            border: none;
-            background: #f0f0f0;
-            cursor: pointer;
+            background-color: #FF9800;
+            color: white;
+            text-decoration: none;
             border-radius: 4px;
+            transition: background-color 0.3s ease;
         }
-
-        .pagination button.active {
-            background: #000066;
+        
+        .pagination a:hover {
+            background-color: #e68900;
+        }
+        
+        .pagination.active-page {
+            background-color: #FF9800;
             color: white;
         }
 

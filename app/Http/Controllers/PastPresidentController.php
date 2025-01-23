@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\past_president;
 use Illuminate\Http\Request;
+use App\Models\director_profile;
 use Illuminate\Support\Facades\Storage;  // Add this line
 
 class PastPresidentController extends Controller
@@ -115,5 +116,12 @@ class PastPresidentController extends Controller
     {
         $pastPresidents = past_president::all();
         return view('admin.past_presidents.view_past_presidents', compact('pastPresidents'));
+    }
+
+    public function past_presidents(){
+       // Fetch active directors and past presidents
+    $directors = director_profile::where('status', 1)->get();
+    $pastPresidents = past_president::where('status', 1)->get();
+        return view('about.directors_presidents', compact('directors','pastPresidents'));
     }
 }

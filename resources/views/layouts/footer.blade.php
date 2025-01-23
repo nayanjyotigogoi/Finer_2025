@@ -16,6 +16,7 @@ body {
     padding: 40px 80px;
     position: relative;
     overflow: hidden;
+    margin-bottom: -20px;
 }
 
 .footer-content {
@@ -26,7 +27,7 @@ body {
 }
 
 .logo img {
-    width: 120px;
+    width: 220px;
 }
 
 .footer-section {

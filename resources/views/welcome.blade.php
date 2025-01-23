@@ -1,205 +1,272 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Past Events</title>
-    <style>
-        /* Your existing CSS remains unchanged */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<style>
 
-        .header {
-            background: linear-gradient(135deg, #000066, #0033cc);
-            height: 300px;
-            position: relative;
-            overflow: hidden;
-        }
 
-        .wave-pattern {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                45deg,
-                rgba(255, 255, 255, 0.1) 0px,
-                rgba(255, 255, 255, 0.1) 2px,
-                transparent 2px,
-                transparent 8px
-            );
-            animation: waveMove 20s linear infinite;
-        }
+    /* Past Presidents Style */
 
-        .header h1 {
-            color: white;
-            font-size: 48px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-        }
+.past-presidents-section {
+    overflow-x: hidden;
+    background: #fff;
+    position: relative;
+}
 
-        .content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+.past-presidents-section::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
 
-        .event-title {
-            color: #ff9900;
-            font-size: 24px;
-            margin-bottom: 30px;
-        }
+/* Background Shapes */
+.past-presidents-shape {
+    position: absolute;
+    border-radius: 100%;
+    z-index: -1;
+}
 
-        .event-card {
-            display: flex;
-            gap: 20px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
+.past-presidents-shape-1 {
+    width: 400px;
+    height: 400px;
+    border: 40px solid rgba(255, 165, 0, 0.1);
+    top: -250px;
+    left: -200px;
+}
 
-        .event-card:hover {
-            transform: translateY(-2px);
-        }
+.past-presidents-shape-2 {
+    width: 300px;
+    height: 300px;
+    border: 30px solid rgba(255, 165, 0, 0.1);
+    bottom: -1px;
+    right: -150px;
+}
 
-        .event-image {
-            width: 200px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 4px;
-        }
+.past-presidents-container {
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 40px 20px;
+    text-align: center;
+}
 
-        .event-description {
-            flex: 1;
-            color: #666;
-            line-height: 1.6;
-        }
+.past-presidents-section-title {
+    color: #FFA500;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
 
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 40px;
-        }
+.past-presidents-main-title {
+    color: #1a1a4b;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-        .pagination button {
-            padding: 8px 12px;
-            border: none;
-            background: #f0f0f0;
-            cursor: pointer;
-            border-radius: 4px;
-        }
+.past-presidents-description {
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+}
 
-        .pagination button.active {
-            background: #000066;
-            color: white;
-        }
+.past-presidents-carousel {
+    position: flex;
+    padding: 100px 50px;
+    height: 500px;
+    overflow: hidden;
+}
 
-        @keyframes waveMove {
-            0% {
-                background-position: 0 0;
-            }
-            100% {
-                background-position: 50px 50px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header class="header">
-        <div class="wave-pattern"></div>
-        <h1>Past Events</h1>
-    </header>
+.past-presidents-carousel-container {
+    display: flex;
+    margin-top: 60px;
+    transition: transform 0.5s ease;
+    gap: 80px;
+    position: relative;
+}
 
-    <main class="content">
-        <h2 class="event-title">Past Events</h2>
-        <div id="events-container">
-            <!-- Events will be populated by JavaScript -->
-        </div>
-        <div class="pagination" id="pagination">
-            <!-- Pagination buttons will be generated dynamically -->
-        </div>
-    </main>
+.past-presidents-card {
+    flex: 0 0 30%; /* Show 3 items */
+    max-width: 300px;
+    border: 2px solid #FFA500;
+    border-radius: 5px;
+    padding: 20px;
+    position: relative;
+    transition: all 0.5s ease;
+    transform: scale(0.8);
+    opacity: 0.7;
+    background: white;
+    margin-bottom: 50px;
+}
 
-    <script>
-        // Sample event data
-        const events = Array(5).fill({
-            image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(10).jpg-Q4RCryX9nootp8J58jDACpHMGcV7yY.jpeg",
-            description: "Lorem ipsum dolor sit amet consectetur. Velit vehicula elementum eget scelerisque. Ut mollis tincidunt mus ut sed sagittis et pellentesque. Praesent a odio enim non risus facilisi lorem."
-        });
+.past-presidents-card.active {
+    transform: scale(1.1);
+    opacity: 1;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
 
-        const eventsContainer = document.getElementById('events-container');
-        const paginationContainer = document.getElementById('pagination');
-        const eventsPerPage = 3; // Number of events per page
-        let currentPage = 1; // Current active page
+.past-presidents-profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin: -80px auto 20px;
+    border: 2px solid #FFA500;
+    object-fit: cover;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
 
-        // Render events for the current page
-        function renderEvents() {
-            const startIndex = (currentPage - 1) * eventsPerPage;
-            const endIndex = startIndex + eventsPerPage;
-            const visibleEvents = events.slice(startIndex, endIndex);
+.past-presidents-card-title {
+    color: #1a1a4b;
+    font-size: 18px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+}
 
-            eventsContainer.innerHTML = visibleEvents.map(event => `
-                <div class="event-card">
-                    <img src="${event.image}" alt="Event" class="event-image">
-                    <p class="event-description">${event.description}</p>
-                </div>
-            `).join('');
-        }
+.past-presidents-card-subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
 
-        // Generate pagination buttons
-        function renderPagination() {
-            const totalPages = Math.ceil(events.length / eventsPerPage);
-            paginationContainer.innerHTML = '';
+.past-presidents-card-description {
+    color: #444;
+    font-size: 14px;
+    line-height: 1.5;
+}
 
-            // Generate Previous Button
-            const prevButton = document.createElement('button');
-            prevButton.textContent = '← Back';
-            prevButton.onclick = () => changePage(currentPage - 1);
-            prevButton.disabled = currentPage === 1;
-            paginationContainer.appendChild(prevButton);
+.past-presidents-nav-button {
+    position: absolute;
+    top: 60%;
+    transform: translateY(-50%);
+    background: #FFA500;
+    border: none;
+    color: white;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+    z-index: 2;
+}
 
-            // Generate Page Buttons
-            for (let i = 1; i <= totalPages; i++) {
-                const pageButton = document.createElement('button');
-                pageButton.textContent = i;
-                pageButton.className = currentPage === i ? 'active' : '';
-                pageButton.onclick = () => changePage(i);
-                paginationContainer.appendChild(pageButton);
-            }
+.past-presidents-nav-button:hover {
+    background: #ff8c00;
+}
 
-            // Generate Next Button
-            const nextButton = document.createElement('button');
-            nextButton.textContent = 'Next →';
-            nextButton.onclick = () => changePage(currentPage + 1);
-            nextButton.disabled = currentPage === totalPages;
-            paginationContainer.appendChild(nextButton);
-        }
+.past-presidents-prev {
+    left: 50px;
+}
 
-        // Change the current page
-        function changePage(page) {
-            const totalPages = Math.ceil(events.length / eventsPerPage);
-            if (page < 1 || page > totalPages) return; // Prevent invalid page numbers
-            currentPage = page;
-            renderEvents();
-            renderPagination();
-        }
+.past-presidents-next {
+    right: 50px;
+}
 
-        // Initialize the page
-        function init() {
-            renderEvents();
-            renderPagination();
-        }
+.past-presidents-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    gap: 8px;
+}
 
-        init();
-    </script>
-</body>
-</html>
+.past-presidents-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.past-presidents-dot.active {
+    background: #FFA500;
+}
+
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(100%) scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) scale(0.8);
+        opacity: 0.7;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(-100%) scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) scale(0.8);
+        opacity: 0.7;
+    }
+}
+
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0) scale(0.8);
+        opacity: 0.7;
+    }
+    to {
+        transform: translateX(-100%) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0) scale(0.8);
+        opacity: 0.7;
+    }
+    to {
+        transform: translateX(100%) scale(0.8);
+        opacity: 0;
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.5s forwards;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.5s forwards;
+}
+
+.slide-out-left {
+    animation: slideOutLeft 0.5s forwards;
+}
+
+.slide-out-right {
+    animation: slideOutRight 0.5s forwards;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1000px) {
+    .past-presidents-carousel {
+        max-width: 700px;
+    }
+    .past-presidents-card {
+        flex: 0 0 250px;
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .past-presidents-carousel {
+        max-width: 300px;
+    }
+    .past-presidents-card {
+        flex: 0 0 260px;
+        max-width: 260px;
+        margin: 0 10px;
+    }
+}
+
+
+</style>

@@ -107,6 +107,16 @@
                 <td>Mines, Minerals & Power Committee</td>
                 <td>Energy Committee</td>
             </tr>
+            <tr>
+                <td>Infrastructure Committee</td>
+                <td>Startup & Entrepreneurship Development Committee</td>
+                <td>Food Processing, Tea & Agri and Allied Sectors Committee</td>
+            </tr>
+            <tr>
+                <td>Service Committee</td>
+                <td>Internal Trade Committee</td>
+                <td>Textile, Handloom and Handicraft Committee</td>
+            </tr>
         </table>
     </div>
     </div>

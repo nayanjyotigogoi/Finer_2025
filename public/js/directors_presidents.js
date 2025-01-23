@@ -1,78 +1,127 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Function to create a card
-    const createCard = (data, type) => {
+// Function to initialize the BOD carousel
+function initializeBODCarousel() {
+    const carouselContainer = document.querySelector('.BOD-carousel-container');
+    const prevBtn = document.querySelector('.BOD-prev');
+    const nextBtn = document.querySelector('.BOD-next');
+
+    // Check if the BOD section is present
+    if (!carouselContainer || !prevBtn || !nextBtn) {
+        return;
+    }
+
+    // Use directorsData passed from Blade
+    const directors = directorsData.map(director => ({
+        name: director.name,
+        title: director.position,
+        company: director.company,
+        description: director.description,
+        image: director.photo ? `/storage/${director.photo}` : 'assets/default-placeholder.jpg',
+    }));
+
+    let currentIndex = 0;
+
+    function createCard(director, isActive = false) {
         const card = document.createElement('div');
-        card.classList.add('BOD-card');
-        
-        let imagePath;
-        
-        // Set image path for Director and President accordingly
-        if (type === 'director') {
-            imagePath = data.photo ? `/storage/director_profiles/${data.photo}` : 'default-image.jpg';
-        } else if (type === 'president') {
-            imagePath = `/storage/past_presidents/${data.photo}`;
-
-        }
-
+        card.className = `BOD-card ${isActive ? 'active' : ''}`;
         card.innerHTML = `
-            <img src="${imagePath}" alt="${data.name}" class="BOD-profile-image">
-            <h3 class="BOD-card-title">${data.name}</h3>
-            <p class="BOD-card-subtitle">${data.position} | ${data.company}</p>
-            <p class="BOD-card-description">${data.description ?? 'No description available'}</p>
+            <img src="${director.image}" alt="${director.name}" class="BOD-profile-image">
+            <h3 class="BOD-card-title">${director.name}</h3>
+            <p class="BOD-card-subtitle">${director.title} | ${director.company}</p>
+            <p class="BOD-card-description">${director.description}</p>
         `;
-        
-        console.log('Creating card:', card); // Log each card created
         return card;
-    };
+    }
 
-    // Function to initialize the carousel
-    const initializeCarousel = (data, containerId, prevBtnClass, nextBtnClass, type) => {
-        const container = document.getElementById(containerId);
-        const prevBtn = document.querySelector(`.${prevBtnClass}`);
-        const nextBtn = document.querySelector(`.${nextBtnClass}`);
+    function renderCarousel() {
+        carouselContainer.innerHTML = '';
+        const visibleCards = [
+            directors[(currentIndex - 1 + directors.length) % directors.length],
+            directors[currentIndex],
+            directors[(currentIndex + 1) % directors.length]
+        ];
+        visibleCards.forEach((director, index) => {
+            const isActive = index === 1;
+            carouselContainer.appendChild(createCard(director, isActive));
+        });
+    }
 
-        if (!container || !prevBtn || !nextBtn) {
-            console.error(`Carousel elements missing for container: ${containerId}`);
-            return;
+    function moveCarousel(direction) {
+        if (direction === 'left') {
+            currentIndex = (currentIndex - 1 + directors.length) % directors.length;
+        } else {
+            currentIndex = (currentIndex + 1) % directors.length;
         }
-
-        let currentIndex = 0;
-
-        const renderCarousel = () => {
-            container.innerHTML = ''; // Clear current cards
-            const visibleCards = [
-                data[(currentIndex - 1 + data.length) % data.length], // Previous card
-                data[currentIndex], // Current card
-                data[(currentIndex + 1) % data.length], // Next card
-            ];
-            visibleCards.forEach((item, index) => {
-                const card = createCard(item, type);
-                if (index === 1) card.classList.add('active'); // Highlight current card
-                container.appendChild(card);
-            });
-        };
-
-        const moveCarousel = (direction) => {
-            if (direction === 'left') {
-                currentIndex = (currentIndex - 1 + data.length) % data.length;
-            } else {
-                currentIndex = (currentIndex + 1) % data.length;
-            }
-            renderCarousel();
-        };
-
-        prevBtn.addEventListener('click', () => moveCarousel('left'));
-        nextBtn.addEventListener('click', () => moveCarousel('right'));
-
-        // Initial render
         renderCarousel();
-    };
+    }
 
-    // Log data to ensure it's available
-    console.log('Directors Data:', directorsData);
-    console.log('Past Presidents Data:', pastPresidentsData);
+    prevBtn.addEventListener('click', () => moveCarousel('left'));
+    nextBtn.addEventListener('click', () => moveCarousel('right'));
 
-    // Initialize both carousels (Directors and Past Presidents)
-    initializeCarousel(directorsData, 'directors-container', 'BOD-prev[data-target="directors-container"]', 'BOD-next[data-target="directors-container"]', 'director');
-    initializeCarousel(pastPresidentsData, 'presidents-container', 'BOD-prev[data-target="presidents-container"]', 'BOD-next[data-target="presidents-container"]', 'president');
-});
+    renderCarousel();
+}
+
+document.addEventListener('DOMContentLoaded', initializeBODCarousel);
+
+
+// Function to initialize the Past Presidents carousel
+function initializePastPresidentsCarousel() {
+    const carouselContainer = document.querySelector('.past-presidents-carousel-container');
+    const prevBtn = document.querySelector('.past-presidents-prev');
+    const nextBtn = document.querySelector('.past-presidents-next');
+
+    // Check if the Past Presidents section is present
+    if (!carouselContainer || !prevBtn || !nextBtn) {
+        return;
+    }
+
+    // Use pastPresidentsData passed from Blade
+    const pastPresidents = pastPresidentsData.map(president => ({
+        name: president.name,
+        title: president.position,
+        description: president.description,
+        image: president.photo ? `/storage/${president.photo}` : 'assets/default-placeholder.jpg',
+    }));
+
+    let currentIndex = 0;
+
+    function createCard(president, isActive = false) {
+        const card = document.createElement('div');
+        card.className = `past-presidents-card ${isActive ? 'active' : ''}`;
+        card.innerHTML = `
+            <img src="${president.image}" alt="${president.name}" class="past-presidents-profile-image">
+            <h3 class="past-presidents-card-title">${president.name}</h3>
+            <p class="past-presidents-card-subtitle">${president.title}</p>
+            <p class="past-presidents-card-description">${president.description}</p>
+        `;
+        return card;
+    }
+
+    function renderCarousel() {
+        carouselContainer.innerHTML = '';
+        const visibleCards = [
+            pastPresidents[(currentIndex - 1 + pastPresidents.length) % pastPresidents.length],
+            pastPresidents[currentIndex],
+            pastPresidents[(currentIndex + 1) % pastPresidents.length]
+        ];
+        visibleCards.forEach((president, index) => {
+            const isActive = index === 1;
+            carouselContainer.appendChild(createCard(president, isActive));
+        });
+    }
+
+    function moveCarousel(direction) {
+        if (direction === 'left') {
+            currentIndex = (currentIndex - 1 + pastPresidents.length) % pastPresidents.length;
+        } else {
+            currentIndex = (currentIndex + 1) % pastPresidents.length;
+        }
+        renderCarousel();
+    }
+
+    prevBtn.addEventListener('click', () => moveCarousel('left'));
+    nextBtn.addEventListener('click', () => moveCarousel('right'));
+
+    renderCarousel();
+}
+
+document.addEventListener('DOMContentLoaded', initializePastPresidentsCarousel);
