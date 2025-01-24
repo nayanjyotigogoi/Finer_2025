@@ -28,15 +28,23 @@ body {
     z-index: 2;
 }
 
-.logo img {
-    width: 110px;
-}
-
 .footer-section {
     width: 110px;
     margin-right: 40px;
 }
 
+
+.footer-section-address h3{
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.footer-section-address p{
+
+    font-size: 14px;
+    color: white;
+    opacity: 0.8;
+}
 .footer-section h3 {
     font-size: 18px;
     margin-bottom: 20px;
@@ -47,8 +55,18 @@ body {
     padding: 0;
 }
 
+.footer-section ul ul {
+    list-style-type: none;
+    padding-left: 20px; /* Indentation for sublinks */
+    display: none; /* Hide submenus by default */
+}
+
 .footer-section ul li {
-    margin-bottom: 10px;
+    margin: 10px 0;
+}
+
+.footer-section ul ul li {
+    margin: 5px 0;
 }
 
 .footer-section ul li a {
@@ -57,6 +75,16 @@ body {
     opacity: 0.8;
 }
 
+.footer-section ul li a:hover {
+    color: #FFA500; /* Optional: color change on hover */
+}
+
+/* Show submenu when hovering over the parent link */
+.footer-section ul li:hover > .submenu {
+    display: block; /* Show the submenu on hover */
+}
+
+/* Social icons styling */
 .social-icons {
     display: flex;
     gap: 20px;
@@ -67,7 +95,7 @@ body {
     font-size: 24px;
 }
 
-
+/* Other styles */
 .copyright::before {
     content: '';
     display: block;
@@ -136,11 +164,11 @@ body {
         </div>
 
         <div class="footer-section">
-            <h3>About Us</h3>
+            <h3>About</h3>
             <ul>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">What We Do</a></li>
-                <li><a href="#">Our Team Members</a></li>
+                <li><a href="{{ url('/about-us') }}">About Us</a></li>
+                <li><a href="{{ url('/finer-foundation')}}">Finer Foundation</a></li>
+                <li><a href="{{ url('/directors-&-past-presidents')}}">Directors & Past Presidents</a></li>
             </ul>
         </div>
 
@@ -148,13 +176,29 @@ body {
             <h3>Quick Links</h3>
             <ul>
                 <li><a href="#">Initiatives</a></li>
-                <li><a href="#">Events</a></li>
-                <li><a href="#">Knowledge Publications</a></li>
+
+                <!-- Events Section -->
+                <li><a href="#">Events</a>
+                    <ul class="submenu">
+                        <li><a href="{{ url('/upcoming-events') }}">Upcoming Events</a></li>
+                        <li><a href="{{ url('/past-events')}}">Past Events</a></li>
+                    </ul>
+                </li>
+
+                <!-- Knowledge Section -->
+                <li><a href="#">Knowledge</a>
+                    <ul class="submenu">
+                        <li><a href="{{url('/magazines')}}">Magazines</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="{{ url('/press-releases')}}">Publications</a></li>
                 <li><a href="#">Gallery</a></li>
             </ul>
         </div>
 
-        <div class="footer-section">
+
+        <div class="footer-section-address">
             <h3>Contact Us</h3>
             <p>Supreme Tower, Lobby- A 2nd Floor, Walford, GS Road,<br>
             Guwahati, Assam-781005.</p>
@@ -178,7 +222,8 @@ body {
     </div>
 
     <div class="copyright">
-        © 2019 | All Rights Reserved
+        © 2025 | All Rights Reserved |
+        Crafted by <a href="http://indigiconsulting.com./">Indigi Consulting and Solutions Pvt Ltd</a>
     </div>
 </footer>
 

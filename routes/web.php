@@ -1,6 +1,4 @@
 <?php
-
-
 use App\Http\Controllers\BannerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -12,6 +10,7 @@ use App\Http\Controllers\DirectorsPresidentsController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\MagazineController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ContactController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -164,8 +163,14 @@ Route::get('/Contact-Us', function () {
     return view('Contact_us'); 
 });
 
+Route::post('/contact', [ContactController::class, 'sendMail'])->name('contact.send');
+
+
 //route for magazine 
 Route::get('/magazines', [MagazineController::class, 'magazines']);
+
+//Route 
+
 
 
 

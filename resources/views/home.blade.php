@@ -34,7 +34,7 @@
 
 
         <!-- About Us Section -->
-        <section class="about-us">
+        <section class="about-us scroll-fade-in">
             <section class="about-section">
                 <div class="image-container">
                     <div class="experience-badge">5+ Industry<br>
@@ -55,44 +55,43 @@
         </section>
 
         <!-- Count Section -->
-        <section class="count-metrics-section">     
+        <section class="count-metrics-section scroll-fade-in">     
             <div class="count-overlay"></div>
-            <div class="count-content">
-                <h2 class="count-title">Bringing Together 400+ Members, 1000+ Events,<br>and Counting – Shaping a Thriving Future</h2>
-                
-                <div class="count-stats-container">
-                    <div class="count-stat-item">
-                        <div class="count-icon">
-                            <!-- SVG for Members Icon (Group of People) -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
-                                <path d="M12 1C7.03 1 3 5.03 3 9s4.03 8 9 8 9-4.03 9-8-4.03-8-9-8zM12 15c-1.38 0-2.63-.56-3.54-1.46A5.97 5.97 0 0 1 12 12c1.38 0 2.63.56 3.54 1.46A5.97 5.97 0 0 1 12 15zM18.92 10.93a7.98 7.98 0 0 1 0-1.86A7.97 7.97 0 0 0 12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10c0-.69-.11-1.34-.29-1.93z"/>
-                            </svg>
-                        </div>
-                        <div class="count-stat-content">
-                            <div class="count-number" data-target="400">0</div>
-                            <div class="count-label">Total Members</div>
-                        </div>
-                    </div>
+                <div class="count-content">
+                    <h2 class="count-title">Bringing Together 400+ Members, 1000+ Events,<br>and Counting – Shaping a Thriving Future</h2>
                     
-                    <div class="count-stat-item">
-                        <div class="count-icon">
-                            <!-- SVG for Event Completed Icon (Calendar with Checkmark) -->
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar-check">
-                                <path d="M19 3h-4V1h-6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM5 19V8h14v11H5zm8-7l-4 4-2-2 6-6 4 4-2 2z"/>
-                            </svg>
+                    <div class="count-stats-container">
+                        <!-- Total Members -->
+                        <div class="count-stat-item">
+                            <div class="count-icon">
+                                <!-- Replace SVG with an image -->
+                                <img src="assests/total_member.png" alt="Members Icon" style="width: 50px; height: 50px;">
+                            </div>
+                            <div class="count-stat-content">
+                                <div class="count-number" data-target="400">0</div>
+                                <div class="count-label">Total Members</div>
+                            </div>
                         </div>
-                        <div class="count-stat-content">
-                            <div class="count-number" data-target="1000">0</div>
-                            <div class="count-label">Event Completed</div>
+                        
+                        <!-- Events Completed -->
+                        <div class="count-stat-item">
+                            <div class="count-icon">
+                                <!-- Replace SVG with an image -->
+                                <img src="assests/event_completed.png" alt="Events Icon" style="width: 50px; height: 50px;">
+                            </div>
+                            <div class="count-stat-content">
+                                <div class="count-number" data-target="1000">0</div>
+                                <div class="count-label">Event Completed</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
 
 
+
         <!-- sticky Section -->
-        <section class="sticky-section">
+        <section class="sticky-section scroll-fade-in">
             <div class="sticky-container">
                 <div class="sticky-background-pattern">
                     <div class="sticky-half-circle" id="sticky-halfCircle"></div>
@@ -207,7 +206,7 @@
         </section>
 
         <!-- vision section -->
-        <section class="vision-section">
+        <section class="vision-section scroll-fade-in">
                 <div class="vision-container">
                     <!-- Top Section -->
                      <div class="vision-top-section">
@@ -280,7 +279,7 @@
 
         <!-- banner section -->
 
-        <section class="banner-container">
+        <section class="banner-container scroll-fade-in">
             <div class="banner-header-section">
                 <div class="banner-upcoming-label">// Upcoming Events</div>
                 <h1 class="banner-main-title">Be Part of the Future</h1>
@@ -303,7 +302,7 @@
 
 
         <!-- Events Section -->
-        <section class="event-section">
+        <section class="event-section scroll-fade-in">
             <div class="event-container">
                 <!-- Upcoming Events -->
                 <section class="event-upcoming-events">
@@ -354,7 +353,7 @@
         </section>
 
         <!-- Board Of Director section -->
-        <section class="BOD-section">
+        <section class="BOD-section scroll-fade-in">
             <!-- Background Shapes -->
             <div class="BOD-shape BOD-shape-1"></div>
             <div class="BOD-shape BOD-shape-2"></div>
@@ -377,42 +376,44 @@
 
 
 
-       <!-- blog section -->
-       <section class="blog-section">
-            <div class="blog-container">
-                <div class="blog-post-container">
-                    <span class="blog-section-label">//Press Release</span>
-                    <div class="blog-post-wrapper">
-                        <!-- Blog Posts -->
-                        @foreach($pressReleases as $pressRelease)
-                            <div class="blog-post">
-                                @if($pressRelease->image)
-                                    <img src="{{ asset('storage/' . $pressRelease->image) }}" alt="Blog image">
-                                @else
-                                    <img src="{{ asset('default-placeholder.jpg') }}" alt="Default image">
-                                @endif
-                                <h3 class="blog-post-h3">{{ $pressRelease->page_title }}</h3>
-                                <p class="blog-post-p">{{ Str::limit($pressRelease->description, 100) }}</p>
-                                @if($pressRelease->pdf)
-                                    <a href="{{ asset('storage/' . $pressRelease->pdf) }}" download class="download-button">Download PDF</a>
-                                @else
-                                    <span>No PDF available</span>
-                                @endif
-                            </div>
-                        @endforeach
+<!-- blog section -->
+<section class="blog-section scroll-fade-in">
+    <div class="blog-container">
+        <div class="blog-post-container">
+            <span class="blog-section-label">//Press Release</span>
+            <div class="blog-post-wrapper">
+                <!-- Blog Posts -->
+                @foreach($pressReleases as $pressRelease)
+                    <div class="blog-post">
+                        @if($pressRelease->image)
+                            <!-- Link to open image in a new tab -->
+                            <a href="{{ asset('storage/' . $pressRelease->image) }}" target="_blank">
+                                <img src="{{ asset('storage/' . $pressRelease->image) }}" alt="Blog image">
+                            </a>
+                        @else
+                            <img src="{{ asset('default-placeholder.jpg') }}" alt="Default image">
+                        @endif
+                        <h3 class="blog-post-h3">{{ $pressRelease->page_title }}</h3>
+                        <p class="blog-post-p">{{ Str::limit($pressRelease->description, 100) }}</p>
+                        @if($pressRelease->image)
+                            <a href="{{ asset('storage/' . $pressRelease->image) }}" download class="download-button">Download Image</a>
+                        @else
+                            <span>No Image available</span>
+                        @endif
                     </div>
-                </div>
-                <a class="twitter-timeline" data-width="450" data-height="500" href="https://twitter.com/FINERIndia?ref_src=twsrc%5Etfw">Tweets by FINERIndia</a>
-                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                @endforeach
+            </div>
+        </div>
+        <a class="twitter-timeline" data-width="450" data-height="500" href="https://twitter.com/FINERIndia?ref_src=twsrc%5Etfw">Tweets by FINERIndia</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    <div class="blog-nav">
+        <span class="blog-dot active"></span>
+        <span class="blog-dot"></span>
+        <span class="blog-dot"></span>
+    </div>
+</section>
 
-             
-            </div>
-            <div class="blog-nav">
-                <span class="blog-dot active"></span>
-                <span class="blog-dot"></span>
-                <span class="blog-dot"></span>
-            </div>
-       </section>
     </div>
  
 @endsection

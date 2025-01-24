@@ -1,36 +1,82 @@
 // script for loading
 document.addEventListener('DOMContentLoaded', () => {
-
-    window.scrollTo(0, 0); // Scroll to the top of the page on load
-
+    // Preloader and door animations
     const preloader = document.getElementById('preloader');
     const topDoor = document.getElementById('top-door');
     const bottomDoor = document.getElementById('bottom-door');
     const logo = document.getElementById('logo');
     const navbar = document.getElementById('navbar');
     const home = document.getElementById('home');
-
+    const progressBar = document.getElementById('progressBar');
 
     // Simulate loading time
     setTimeout(() => {
         topDoor.classList.add('open');
         bottomDoor.classList.add('open');
 
+        // Move the logo after doors open
         setTimeout(() => {
             logo.classList.add('move-to-nav');
         }, 500);
 
+        // Show navbar after another 500ms
         setTimeout(() => {
             navbar.classList.add('show');
         }, 1000);
 
+        // Show the home content and hide preloader after 1500ms
         setTimeout(() => {
             home.classList.add('show');
             preloader.style.display = 'none';
         }, 1500);
     }, 2000); // Simulate 2 seconds of loading time
 
+    // Start the progress bar animation (3 seconds to fill up)
+    setTimeout(() => {
+        progressBar.style.width = '100%'; // Fill the progress bar in 3 seconds
+    }, 100);
+
+    // Add the fade-out and slide-out animation after the progress bar completes (3 seconds)
+    setTimeout(() => {
+        progressBar.classList.add('complete');
+    }, 1000); // After 1 seconds, start fading and sliding out
 });
+
+
+
+// home.js
+document.addEventListener('DOMContentLoaded', () => {
+    const scrollElements = document.querySelectorAll('.scroll-fade-in');
+
+    const elementInView = (el, offset = 100) => {
+        const elementTop = el.getBoundingClientRect().top;
+        return (
+            elementTop <=
+            (window.innerHeight || document.documentElement.clientHeight) - offset
+        );
+    };
+
+    const displayScrollElement = (element) => {
+        element.classList.add('visible');
+    };
+
+    const hideScrollElement = (element) => {
+        element.classList.remove('visible');
+    };
+
+    const handleScrollAnimation = () => {
+        scrollElements.forEach((el) => {
+            if (elementInView(el)) {
+                displayScrollElement(el);
+            } else {
+                hideScrollElement(el);
+            }
+        });
+    };
+
+    window.addEventListener('scroll', handleScrollAnimation);
+});
+
 
 //javascript for home section
 document.addEventListener('DOMContentLoaded', () => {
@@ -41,8 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // const galleryImages = imageGallery.querySelectorAll('.gallery-image');
 
     const heroData = [
-        "assests/hero_1.jpg",
         "assests/hero_2.jpg",
+        "assests/hero_1.jpg",
         "assests/hero_3.jpg",
     ];
 

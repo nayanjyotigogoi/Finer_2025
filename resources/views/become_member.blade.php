@@ -113,7 +113,8 @@
         <div class="member-contact-section" id="contact">
     <h2 class="member-member-header">// Contact Us</h2>
     <h3 class="member-title">Enquire</h3>
-    <form class="member-contact-form" id="contactForm">
+    <form class="member-contact-form" id="contactForm" action="{{ route('contact.send') }}" method="POST">
+    @csrf
         <div>
             <label for="firstName">First Name</label>
             <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>

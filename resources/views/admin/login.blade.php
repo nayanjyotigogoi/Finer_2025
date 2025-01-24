@@ -132,7 +132,7 @@
         </div>
     @endif -->
         <h1>Log In</h1>
-        <p class="signup-text">You don't have a password? Then Please Contact Your Admin.</p>
+        <p class="signup-text">You don't have a password? Please Contact Your Admin.</p>
 
         <form action="{{route('login')}}" method="post" class="login-form" id="loginForm">
             @csrf

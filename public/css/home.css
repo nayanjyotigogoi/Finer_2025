@@ -9,6 +9,22 @@ body {
     color: #fef8f8;
 }
 
+/* home.css */
+
+/* Initial state for fade-in elements */
+.scroll-fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease-out;
+}
+
+/* When visible */
+.scroll-fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
         /* Preloader Styles */
         #preloader {
             position: fixed;
@@ -56,30 +72,8 @@ body {
 
         #rotating-path {
             animation: rotatePath 5s linear infinite;
-            transform-origin: 99px 76px; /* Adjust based on your SVG viewBox */
+            transform-origin: 257px 256px; /* Adjust based on your SVG viewBox */
         }
-
-                /* Path slide-in animation */
-                #sliding-path {
-                 
-                    stroke: rgb(244, 244, 244);
-                    stroke-width: 2;
-                    fill: none;
-        
-                    /* Initial state for the slide-in effect */
-                    stroke-dasharray: 700; /* Total length of the path */
-                    stroke-dashoffset: 400; /* Fully hidden (offset matches dasharray) */
-        
-                    /* Animation */
-                    animation: slideIn 5s ease-out forwards;
-                }
-        
-                @keyframes slideIn {
-                    to {
-                        stroke-dashoffset: 0; /* Fully visible */
-                    }
-                }
-
         @keyframes rotatePath {
             from {
                 transform: rotate(0deg);
@@ -88,21 +82,67 @@ body {
                 transform: rotate(360deg);
             }
         }
-        .progress-container {
-            width: 80%;
-            height: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 20px;
+
+        /* Path slide-in animation */
+        #sliding-path {   
+            stroke: rgb(244, 244, 244);
+            stroke-width: 2;
+            fill: none;
+
+            /* Initial state for the slide-in effect */
+            stroke-dasharray: 700; /* Total length of the path */
+            stroke-dashoffset: 400; /* Fully hidden (offset matches dasharray) */
+
+            /* Animation */
+            animation: slideIn 5s ease-out forwards;
         }
-        
-        .progress-bar {
-            width: 0;
-            height: 100%;
-            background-color: #4291eb;
-            transition: width 0.1s ease; /* Smooth progress animation */
+
+        @keyframes slideIn {
+            to {
+                stroke-dashoffset: 0; /* Fully visible */
+            }
         }
+
+        /* Progress bar container */
+.progress-container {
+    width: 200px;
+    height: 10px;
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 350px;
+}
+
+/* The actual progress bar */
+.progress-bar {
+    width: 0;
+    height: 100%;
+    background-color: #1a237e;
+    border-radius: 15px;
+    transition: width 2s ease-in-out; /* Smooth width transition */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Animation for the progress bar fade out and slide out */
+@keyframes fadeOutSlideOut {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100%); /* Slide out upwards */
+    }
+}
+
+/* Apply the animation to the progress bar after it completes */
+.progress-bar.complete {
+    animation: fadeOutSlideOut 1s forwards 1s; /* Slide out and fade out after 5s */
+}
+
 
 
   
@@ -1252,8 +1292,10 @@ background-position: center;
 
 .blog-post-h3 {
     font-size: 18px;
+    font-weight: bold;
     margin-bottom: 20px;
-    color: #333;
+    margin-top: 20px;
+    color: #e68900;
 }
 
 .blog-post-p {
@@ -1335,7 +1377,7 @@ background-position: center;
 .download-button {
             display: inline-block;
             margin-top: 15px;
-            padding: 8px 16px;
+            padding: 4px 16px;
             background-color: #FF9800;
             color: white;
             border: none;

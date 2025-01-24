@@ -17,7 +17,7 @@
                                         <th>Description</th>
                                         <th>Image</th>
                                         <th>Status</th>
-                                        <th>PDF</th>
+                                        <!-- <th>PDF</th> -->
                                         <!-- <th>Created At</th> -->
                                         <th>Actions</th>
                                     </tr>
@@ -36,13 +36,13 @@
                                             @endif
                                         </td>
                                         <td>{{ $pressRelease->status ? 'Active' : 'Inactive' }}</td>
-                                        <td>
+                                        <!-- <td>
                                             @if($pressRelease->pdf)
                                                 <a href="{{ asset('storage/' . $pressRelease->pdf) }}" download class="download-button">Download PDF</a>
                                             @else
                                                 <span>No PDF available</span>
                                             @endif
-                                        </td>
+                                        </td> -->
                                         <!-- <td>{{ $pressRelease->created_at }}</td> -->
                                         <td>
                                             <a href="{{ route('press_releases.edit', $pressRelease->id) }}" class="btn btn-warning btn-sm">Edit</a>

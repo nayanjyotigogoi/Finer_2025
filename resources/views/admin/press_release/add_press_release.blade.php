@@ -46,13 +46,13 @@
                                     @enderror
                                 </div>
 
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <label for="pdf" class="form-label">Upload PDF</label>
                                     <input type="file" class="form-control @error('pdf') is-invalid @enderror" id="pdf" name="pdf">
                                     @error('pdf')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> -->
 
                                 <div class="mb-3">
                                     <label for="status" class="form-label">Status</label>
