@@ -7,13 +7,31 @@ use Illuminate\Http\Request;
 
 class PressReleaseController extends Controller
 {
-    // Display a list of press releases
-    public function index()
+    public function index(Request $request)
     {
-        $pressReleases = press_release::all();
+        $query = press_release::query();
+    
+        // Apply filters
+        if ($request->has('search') && $request->search != '') {
+            $query->where('page_title', 'like', '%' . $request->search . '%');
+        }
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+        if ($request->has('date') && $request->date != '') {
+            $query->whereDate('created_at', $request->date);
+        }
+    
+        $pressReleases = $query->paginate(10);
+    
+        if ($request->ajax()) {
+            return response()->json(view('admin.press_release.partials.press_table', compact('pressReleases'))->render());
+        }
+    
         return view('admin.press_release.view_press_release', compact('pressReleases'));
     }
-
+    
+    
     // Show the form for creating a new press release
     public function create()
     {

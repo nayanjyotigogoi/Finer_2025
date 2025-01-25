@@ -12,11 +12,53 @@ class BannerController extends Controller
     /**
      * Display a listing of banners.
      */
-    public function view()
-{
-    $banners = Banner::all(); // Fetch all banners from the database
-    return view('admin.banner.view_banner', compact('banners'));
-}
+    public function view(Request $request)
+    {
+        $query = Banner::query();
+    
+        // Apply filters
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->search . '%')
+                  ->orWhere('caption', 'LIKE', '%' . $request->search . '%');
+            });
+        }
+    
+        if (!is_null($request->status)) {
+            $query->where('status', $request->status);
+        }
+    
+        // Paginate results
+        $banners = $query->orderBy('created_at', 'desc')->paginate(10);
+    
+        if ($request->ajax()) {
+            return view('admin.banner.partials.table', compact('banners'))->render();
+        }
+    
+        return view('admin.banner.view_banner', compact('banners'));
+    }
+    
+
+
+    
+    public function exportCsv()
+    {
+        $banners = Banner::all();
+        $csvContent = "ID,Name,Caption,Order,Status\n";
+        foreach ($banners as $banner) {
+            $csvContent .= "{$banner->id},{$banner->name},{$banner->caption},{$banner->order}," . ($banner->status ? 'Active' : 'Inactive') . "\n";
+        }
+        return response($csvContent, 200, ['Content-Type' => 'text/csv', 'Content-Disposition' => 'attachment; filename="banners.csv"']);
+    }
+    
+    public function exportPdf()
+    {
+        $banners = Banner::all();
+        $pdf = \PDF::loadView('admin.banners.pdf', compact('banners'));
+        return $pdf->download('banners.pdf');
+    }
+    
+    
 
 
     /**
@@ -46,6 +88,9 @@ class BannerController extends Controller
     $imagePath = null;
     if ($request->hasFile('image')) {
         $imagePath = $request->file('image')->store('banners', 'public');
+    }
+    else {
+        $imagePath = 'assests/user.png'; // Set the default image path
     }
 
     // Set a default value for description if it's not provided

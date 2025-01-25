@@ -9,12 +9,46 @@ use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
-    public function view()
-    {
-        // Get all events
-        $events = Event::all();
-        return view('admin.events.view_events', compact('events'));
+    public function view(Request $request)
+{
+    $query = Event::query();
+
+    // Apply search filters
+    if ($request->filled('title')) {
+        $query->where('title', 'LIKE', '%' . $request->title . '%');
     }
+
+    if ($request->filled('description')) {
+        $query->where('description', 'LIKE', '%' . $request->description . '%');
+    }
+
+    // Apply status filter
+    if (!is_null($request->status)) {
+        $query->where('status', $request->status);
+    }
+
+    // Apply event date filter
+    if ($request->filled('event_date')) {
+        $query->whereDate('event_date', $request->event_date);
+    }
+
+    // Apply order filter
+    if ($request->filled('order')) {
+        $query->where('order', $request->order);
+    }
+
+    // Order events by created_at in descending order (latest first)
+    $events = $query->orderBy('created_at', 'desc')->paginate(7);
+
+    if ($request->ajax()) {
+        return view('admin.events.partials.events_table', compact('events'))->render();
+    }
+
+    return view('admin.events.view_events', compact('events'));
+}
+
+    
+    
 
     public function create()
     {

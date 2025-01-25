@@ -112,11 +112,30 @@ class PastPresidentController extends Controller
     }
 
     // Display a listing of all past presidents
-    public function view()
+    public function view(Request $request)
     {
-        $pastPresidents = past_president::all();
+        $query = past_president::query();
+    
+        // Apply filters
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+        if ($request->has('company') && $request->company != '') {
+            $query->where('company', 'like', '%' . $request->company . '%');
+        }
+    
+        $pastPresidents = $query->paginate(10);
+    
+        if ($request->ajax()) {
+            return response()->json(view('admin.past_presidents.partials.past_presidents_table', compact('pastPresidents'))->render());
+        }
+    
         return view('admin.past_presidents.view_past_presidents', compact('pastPresidents'));
     }
+    
 
     public function past_presidents(){
        // Fetch active directors and past presidents

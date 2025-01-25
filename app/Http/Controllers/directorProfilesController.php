@@ -8,11 +8,30 @@ use Illuminate\Support\Facades\Storage;
 
 class directorProfilesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $directorProfiles = director_profile::all();
+        $query = director_profile::query();
+    
+        // Apply filters
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+        if ($request->has('company') && $request->company != '') {
+            $query->where('company', 'like', '%' . $request->company . '%');
+        }
+    
+        $directorProfiles = $query->paginate(10);
+    
+        if ($request->ajax()) {
+            return response()->json(view('admin.director_profiles.partials.director_profiles_table', compact('directorProfiles'))->render());
+        }
+    
         return view('admin.director_profiles.view_director_profiles', compact('directorProfiles'));
     }
+    
 
     public function create()
     {
@@ -35,6 +54,7 @@ class directorProfilesController extends Controller
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('director_profiles', 'public');
         }
+
 
         director_profile::create([
             'name' => $request->name,
@@ -102,12 +122,12 @@ class directorProfilesController extends Controller
         return redirect()->route('director_profiles.view')->with('success', 'Director profile deleted successfully!');
     }
 
-    public function directors()
-    {
-        // Fetching the active directors and past presidents from the database
-        $directors = director_profile::where('status', 1)->get(); // Active directors
+    // public function directors()
+    // {
+    //     // Fetching the active directors and past presidents from the database
+    //     $directors = director_profile::where('status', 1)->get(); // Active directors
        
-        // Passing data to the view
-        return view('about.directors_presidents', compact('directors'));
-    }
+    //     // Passing data to the view
+    //     return view('about.directors_presidents', compact('directors'));
+    // }
 }

@@ -9,53 +9,42 @@
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">View Magazines</h5>
-                            <table class="table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Sl No</th>
-                                        <th>Title</th>
-                                        <th>Description</th>
-                                        <th>Image</th>
-                                        <th>Status</th>
-                                        <th>PDF</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($magazines as $magazine)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $magazine->page_title }}</td>
-                                        <td>{{ \Str::limit($magazine->description, 50) }}</td>
-                                        <td>
-                                            @if($magazine->image)
-                                                <img src="{{ asset('storage/' . $magazine->image) }}" alt="Magazine Image" width="50" height="50">
-                                            @else
-                                                No Image
-                                            @endif
-                                        </td>
-                                        <td>{{ $magazine->status ? 'Active' : 'Inactive' }}</td>
-                                        <td>
-                                            @if($magazine->pdf)
-                                                <a href="{{ asset('storage/' . $magazine->pdf) }}" download class="download-button">Download PDF</a>
-                                            @else
-                                                <span>No PDF available</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('magazines.edit', $magazine->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
-                                            <form action="{{ route('magazines.destroy', $magazine->id) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                            </form>
+                            <!-- Filter Form -->
+                            <form id="filterForm" class="mb-4">
+                                @csrf
+                                <div class="row">
+                                    <!-- Search by Title -->
+                                    <div class="col-md-3">
+                                        <input type="text" id="search" name="search" class="form-control" placeholder="Search Title">
+                                    </div>
+                                    <!-- Filter by Status -->
+                                    <div class="col-md-3">
+                                        <select id="status" name="status" class="form-control">
+                                            <option value="">All Status</option>
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                        </select>
+                                    </div>
+                                    <!-- Filter Submit -->
+                                    <div class="col-md-3">
+                                        <button type="submit" id="filterSubmit" class="btn btn-primary">
+                                            <i class="fas fa-search"></i>
+                                        </button>
 
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                         <!-- Refresh Button -->
+                                        <button type="submit" id="refreshTable" class="btn btn-outline-secondary ms-2" title="Refresh Table">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                            <!-- Table -->
+                            <div id="magazineTable">
+                                @include('admin.Magazine.partials.magazine_table', ['magazines' => $magazines])
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -64,3 +53,68 @@
     </main>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const filterForm = document.getElementById('filterForm');
+        const filterSubmit = document.getElementById('filterSubmit');
+        const refreshButton = document.getElementById('refreshTable');
+        const magazineTable = document.getElementById('magazineTable');
+
+        // Function to fetch filtered results
+        function fetchFilteredResults(url = '{{ route('magazines.view') }}') {
+            const formData = new FormData(filterForm); // Collect form data
+            const queryString = new URLSearchParams(formData).toString();
+
+            fetch(`${url}?${queryString}`, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = html;
+
+                    // Replace the table content
+                    const newTable = tempDiv.querySelector('#magazineTable');
+                    if (newTable) {
+                        magazineTable.innerHTML = newTable.innerHTML;
+                    } else {
+                        magazineTable.innerHTML = `<p class="text-center">No results found.</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching filtered results:', error);
+                    magazineTable.innerHTML = `<p class="text-center text-danger">Error loading data.</p>`;
+                });
+        }
+
+        // Trigger filtering on button click
+        filterSubmit.addEventListener('click', () => {
+            fetchFilteredResults();
+        });
+
+        // Trigger refresh on button click
+        refreshButton.addEventListener('click', () => {
+            // Clear form inputs
+            document.getElementById('search').value = '';
+            document.getElementById('status').value = '';
+
+            // Fetch the unfiltered results
+            fetchFilteredResults();
+        });
+
+        // Optional: Trigger filtering on form input change
+        filterForm.addEventListener('input', () => {
+            fetchFilteredResults();
+        });
+    });
+</script>
+@endpush

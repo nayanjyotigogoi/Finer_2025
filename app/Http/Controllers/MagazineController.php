@@ -13,12 +13,27 @@ class MagazineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        // Fetch all magazines and pass to view
-        $magazines = magazine::all();
-        return view('admin.Magazine.view_magazine', compact('magazines'));
+    public function index(Request $request)
+{
+    $query = magazine::query();
+
+    // Apply filters
+    if ($request->has('search') && $request->search != '') {
+        $query->where('page_title', 'like', '%' . $request->search . '%');
     }
+    if ($request->has('status') && $request->status != '') {
+        $query->where('status', $request->status);
+    }
+
+    $magazines = $query->paginate(10);
+
+    if ($request->ajax()) {
+        return response()->json(view('admin.Magazine.partials.magazine_table', compact('magazines'))->render());
+    }
+
+    return view('admin.Magazine.view_magazine', compact('magazines'));
+}
+
 
     /**
      * Show the form for creating a new magazine.

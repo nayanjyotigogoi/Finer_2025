@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-< lang="en">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -29,17 +29,21 @@
   <!-- Template Main CSS File -->
   <link href="/admin_assets/css/style.css" rel="stylesheet">
 
-
 </head>
-        
-</body>
+
+<body>
+  <!-- Main content of your page goes here -->
+
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
       &copy; Copyright <strong><span>FINER Admin</span></strong>. All Rights Reserved
     </div>
     <div class="credits">  
-    Crafted by <a href="http://indigiconsulting.com./">Indigi Consulting and Solutions Pvt Ltd</a>
+      Crafted by <a href="http://indigiconsulting.com./">Indigi Consulting and Solutions Pvt Ltd</a>
+    </div>
   </footer><!-- End Footer -->
-      </body>
+
+</body>
+
 </html>

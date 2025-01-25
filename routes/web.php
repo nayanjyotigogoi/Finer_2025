@@ -55,6 +55,11 @@ Route::prefix('admin')->group(function () {
     Route::get('/banners/{id}/edit', [BannerController::class, 'edit'])->name('banners.edit');
     Route::put('/banners/{id}', [BannerController::class, 'update'])->name('banners.update');
     Route::delete('/banners/{id}', [BannerController::class, 'destroy'])->name('banners.destroy');
+
+    // Route to export banners data in CSV format, pdf format
+    Route::get('/banners/export/csv', [BannerController::class, 'exportCsv'])->name('banners.export.csv');
+    Route::get('/banners/export/pdf', [BannerController::class, 'exportPdf'])->name('banners.export.pdf');
+
 });
 
 //routes for events
@@ -76,6 +81,9 @@ Route::put('events/{id}', [EventController::class, 'update'])->name('events.upda
 
 // Route to delete an event from the database
 Route::delete('events/{id}', [EventController::class, 'destroy'])->name('events.destroy');
+// Route to view all events with filter functionality
+Route::get('events', [EventController::class, 'view'])->name('events.view');
+
 
 // Routes for Press Release Management
 Route::prefix('admin/press_releases')->group(function () {
@@ -85,6 +93,7 @@ Route::prefix('admin/press_releases')->group(function () {
     Route::get('/edit/{id}', [PressReleaseController::class, 'edit'])->name('press_releases.edit');
     Route::put('/update/{id}', [PressReleaseController::class, 'update'])->name('press_releases.update');
     Route::delete('/destroy/{id}', [PressReleaseController::class, 'destroy'])->name('press_releases.destroy');
+    // Route::get('/', [PressReleaseController::class, 'view'])->name('press_releases.view');
 });
 
 //route for the director profiles 
@@ -126,7 +135,6 @@ Route::prefix('admin')->group(function () {
     // Route to delete a magazine
     Route::delete('/magazines/delete/{id}', [MagazineController::class, 'destroy'])->name('magazines.destroy');
 });
-
 
 });
 

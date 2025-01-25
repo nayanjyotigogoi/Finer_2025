@@ -1,186 +1,188 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magazines</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<!-- FontAwesome CDN -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
-        .header {
-            background: linear-gradient(45deg, #000066, #000099);
-            position: relative;
-            height: 250px;
-            overflow: hidden;
-        }
+@extends('layouts.admin_app')
 
-        .wave-pattern {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg');
-            background-size: cover;
-            opacity: 0.1;
-        }
+@section('title', 'View Banners')
 
-        .header h1 {
-            position: relative;
-            color: white;
-            text-align: center;
-            padding-top: 100px;
-            font-size: 2.5rem;
-        }
+@section('content')
+<div class="container">
+    <main id="main" class="main">
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">View Banners</h5>
 
-        .press-release {
-            color: #FF9900;
-            padding: 20px;
-            margin: 20px;
-            font-size: 1.5rem;
-        }
+                            <!-- Filters Section -->
+                            <div class="mb-3">
+                                <form id="filterForm">
+                                    <div class="row">
+                                        <!-- Search -->
+                                        <div class="col-md-4">
+                                            <input 
+                                                type="text" 
+                                                name="search" 
+                                                id="search" 
+                                                class="form-control" 
+                                                placeholder="Search by Name or Caption" 
+                                                value="{{ request('search') }}">
+                                        </div>
 
-        .magazine-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+                                        <!-- Status Filter -->
+                                        <div class="col-md-3">
+                                            <select name="status" id="status" class="form-select">
+                                                <option value="">All Statuses</option>
+                                                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Active</option>
+                                                <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>Inactive</option>
+                                            </select>
+                                        </div>
 
-        .magazine-card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+                                        <!-- Search Button with Icon -->
+                                        <div class="col-md-2">
+                                            <button type="submit" id="filterSubmit" class="btn btn-primary w-30">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
 
-        .magazine-image {
-            width: 100%;
-            height: auto;
-            border-radius: 4px;
-        }
+                                        <!-- Export Buttons with Icons -->
+                                        <div class="col-md-3 text-end">
+                                            <button type="button" id="exportCsv" class="btn btn-primary">
+                                                <i class="fas fa-file-csv"></i> 
+                                            </button>
+                                            <button type="button" id="exportPdf" class="btn btn-secondary">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
 
-        .download-btn {
-            background-color: #FF9900;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            margin-top: 10px;
-            cursor: pointer;
-            width: 100%;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-        }
+                            <!-- Table -->
+                            <div id="bannerTable" class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Caption</th>
+                                            <th>Image</th>
+                                            <th>Order</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bannerTableBody">
+                                        @include('admin.banner.partials.table', ['banners' => $banners])
+                                    </tbody>
+                                </table>
+                            </div><!-- End Table -->
+                            <!-- Pagination -->
+                            <div id="paginationWrapper" class="pagination justify-content-center">
+                                @if($banners->links())
+                                    {{ $banners->links() }}
+                                @endif
+                            </div>
 
-        .download-btn:hover {
-            background-color: #FF8800;
-        }
+    
 
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin: 20px 0;
-        }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
 
-        .pagination button {
-            padding: 5px 10px;
-            border: 1px solid #ddd;
-            background: white;
-            cursor: pointer;
-        }
+<!-- AJAX Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const filterForm = document.getElementById('filterForm');
+    const searchInput = document.getElementById('search');
+    const statusSelect = document.getElementById('status');
+    const filterSubmit = document.getElementById('filterSubmit'); // Search Button
+    const bannerTableBody = document.getElementById('bannerTableBody');
 
-        .pagination button.active {
-            background: #000;
-            color: white;
-        }
+    // Function to fetch filtered results
+    function fetchFilteredResults(url = '/admin/banners') {
+        const formData = new FormData(filterForm); // Collect form data
+        const queryString = new URLSearchParams(formData).toString();
 
-        @media (max-width: 768px) {
-            .magazine-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+        fetch(`${url}?${queryString}`)
+            .then(response => response.text())
+            .then(html => {
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
 
-        @media (max-width: 480px) {
-            .magazine-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header class="header">
-        <div class="wave-pattern"></div>
-        <h1>Magazines</h1>
-    </header>
-
-    <h2 class="press-release">Press Release</h2>
-
-    <div class="magazine-grid">
-        <!-- Repeated 6 times for the grid -->
-        <div class="magazine-card">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="FINER News & Views" class="magazine-image">
-            <a href="#" class="download-btn">↓ Download</a>
-        </div>
-        <div class="magazine-card">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="FINER News & Views" class="magazine-image">
-            <a href="#" class="download-btn">↓ Download</a>
-        </div>
-        <div class="magazine-card">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="FINER News & Views" class="magazine-image">
-            <a href="#" class="download-btn">↓ Download</a>
-        </div>
-        <div class="magazine-card">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="FINER News & Views" class="magazine-image">
-            <a href="#" class="download-btn">↓ Download</a>
-        </div>
-        <div class="magazine-card">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="FINER News & Views" class="magazine-image">
-            <a href="#" class="download-btn">↓ Download</a>
-        </div>
-        <div class="magazine-card">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="FINER News & Views" class="magazine-image">
-            <a href="#" class="download-btn">↓ Download</a>
-        </div>
-    </div>
-
-    <div class="pagination">
-        <button>← Back</button>
-        <button>1</button>
-        <button class="active">2</button>
-        <button>3</button>
-        <button>4</button>
-        <button>5</button>
-        <button>Next →</button>
-    </div>
-
-    <script>
-        // Add click handlers for pagination
-        document.querySelectorAll('.pagination button').forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove active class from all buttons
-                document.querySelectorAll('.pagination button').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                // Add active class to clicked button if it's a number
-                if (!this.textContent.includes('←') && !this.textContent.includes('→')) {
-                    this.classList.add('active');
+                // Update table body
+                const newTbody = tempDiv.querySelector('tbody');
+                if (newTbody) {
+                    bannerTableBody.innerHTML = newTbody.innerHTML;
                 }
-            });
-        });
-    </script>
-</body>
-</html>
+
+                // Update pagination
+                const newPagination = tempDiv.querySelector('.pagination');
+                const paginationWrapper = document.querySelector('#paginationWrapper');
+                if (newPagination && paginationWrapper) {
+                    paginationWrapper.innerHTML = newPagination.innerHTML;
+                }
+            })
+            .catch(error => console.error('Error fetching filtered results:', error));
+    }
+
+    // Reset the table to original unfiltered data when the page loads
+    // (only if no filters are applied in the URL)
+    const searchQuery = new URLSearchParams(window.location.search).get('search');
+    const statusQuery = new URLSearchParams(window.location.search).get('status');
+
+    // If no filters are in the URL, display original data
+    if (!searchQuery && !statusQuery) {
+        fetchFilteredResults('/admin/banners'); // Show original data without filters
+    } else {
+        // Apply filters if query parameters exist
+        if (searchQuery) {
+            searchInput.value = searchQuery; // Set the search input value
+        }
+        if (statusQuery) {
+            statusSelect.value = statusQuery; // Set the status dropdown value
+        }
+
+        fetchFilteredResults(); // Fetch filtered data based on the query parameters
+    }
+
+    // Trigger filter on Search button click
+    filterSubmit.addEventListener('click', () => {
+        fetchFilteredResults(); // Fetch filtered results when button is clicked
+    });
+
+    // Trigger search filter on typing with a delay (debounce)
+    let debounceTimeout;
+    searchInput.addEventListener('input', () => {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(() => {
+            fetchFilteredResults(); // Trigger the filter on typing
+        }, 300); // Adjust the delay (300ms) if necessary
+    });
+
+    // Trigger status filter on change
+    statusSelect.addEventListener('change', () => {
+        fetchFilteredResults(); // Trigger the filter on status change
+    });
+
+    // Handle pagination links dynamically
+    document.addEventListener('click', function (event) {
+        if (event.target.tagName === 'A' && event.target.closest('.pagination')) {
+            event.preventDefault();
+            fetchFilteredResults(event.target.href);
+        }
+    });
+
+    // Export buttons
+    document.getElementById('exportCsv').addEventListener('click', () => window.location.href = `/admin/banners/export/csv`);
+    document.getElementById('exportPdf').addEventListener('click', () => window.location.href = `/admin/banners/export/pdf`);
+});
+
+</script>
+
+@endsection

@@ -20,14 +20,12 @@
         <div class="card-header">
             <h3>Welcome, Admin</h3>
         </div>
-        <div class="card-body">
+        <!-- <div class="card-body">
             <p>Today's date is: {{ \Carbon\Carbon::now()->toFormattedDateString() }}</p>
             <p>The current time is: {{ \Carbon\Carbon::now()->toTimeString() }}</p>
-        </div>
-    </div><!-- End Welcome Section -->
-
-     <!-- Collapsible User Manual Section -->
-    <div class="row">
+        </div> -->
+             <!-- Collapsible User Manual Section -->
+        <div class="row">
         <div class="col-lg-10 mx-auto">
             <!-- Button to toggle the collapsible user manual -->
             <button class="btn btn-primary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#userManual" aria-expanded="false" aria-controls="userManual">
@@ -62,7 +60,10 @@
                 </div>
             </div><!-- End User Manual Card -->
         </div>
-    </div><!-- End User Manual Section -->
+        </div><!-- End User Manual Section -->
+    </div><!-- End Welcome Section -->
+
+
 
     <!-- Recent Activity Section -->
     <div class="row">
