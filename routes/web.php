@@ -177,7 +177,9 @@ Route::post('/contact', [ContactController::class, 'sendMail'])->name('contact.s
 //route for magazine 
 Route::get('/magazines', [MagazineController::class, 'magazines']);
 
-//Route 
+Route::get('/under-construction', function () {
+    return view('under_construction'); // Assuming the Blade file is named 'under-construction.blade.php'
+});
 
 
 

@@ -1,188 +1,311 @@
-<!-- FontAwesome CDN -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Construction - 3D</title>
+    <script async src="https://unpkg.com/es-module-shims/dist/es-module-shims.js"></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.159.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.159.0/examples/jsm/"
+        }
+    }
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
 
-@extends('layouts.admin_app')
+        body {
+            min-height: 100vh;
+            background-color: #fff;
+        }
 
-@section('title', 'View Banners')
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
 
-@section('content')
-<div class="container">
-    <main id="main" class="main">
-        <section class="section">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">View Banners</h5>
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-                            <!-- Filters Section -->
-                            <div class="mb-3">
-                                <form id="filterForm">
-                                    <div class="row">
-                                        <!-- Search -->
-                                        <div class="col-md-4">
-                                            <input 
-                                                type="text" 
-                                                name="search" 
-                                                id="search" 
-                                                class="form-control" 
-                                                placeholder="Search by Name or Caption" 
-                                                value="{{ request('search') }}">
-                                        </div>
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 3;
+        }
 
-                                        <!-- Status Filter -->
-                                        <div class="col-md-3">
-                                            <select name="status" id="status" class="form-select">
-                                                <option value="">All Statuses</option>
-                                                <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>Active</option>
-                                                <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>Inactive</option>
-                                            </select>
-                                        </div>
+        .header button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #666;
+        }
 
-                                        <!-- Search Button with Icon -->
-                                        <div class="col-md-2">
-                                            <button type="submit" id="filterSubmit" class="btn btn-primary w-30">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
+        .content {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-                                        <!-- Export Buttons with Icons -->
-                                        <div class="col-md-3 text-end">
-                                            <button type="button" id="exportCsv" class="btn btn-primary">
-                                                <i class="fas fa-file-csv"></i> 
-                                            </button>
-                                            <button type="button" id="exportPdf" class="btn btn-secondary">
-                                                <i class="fas fa-file-pdf"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+        .text-content h1 {
+            font-size: 2.5rem;
+            color: #2d4356;
+            margin-bottom: 20px;
+        }
 
-                            <!-- Table -->
-                            <div id="bannerTable" class="table-responsive">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Name</th>
-                                            <th>Caption</th>
-                                            <th>Image</th>
-                                            <th>Order</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="bannerTableBody">
-                                        @include('admin.banner.partials.table', ['banners' => $banners])
-                                    </tbody>
-                                </table>
-                            </div><!-- End Table -->
-                            <!-- Pagination -->
-                            <div id="paginationWrapper" class="pagination justify-content-center">
-                                @if($banners->links())
-                                    {{ $banners->links() }}
-                                @endif
-                            </div>
+        .text-content p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
 
-    
+        .subscribe-form {
+            display: flex;
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
 
-                        </div>
-                    </div>
+        .subscribe-form input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .subscribe-form button {
+            padding: 12px 24px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .subscribe-form button:hover {
+            background-color: #1557b0;
+        }
+
+        .countdown {
+            margin-top: 60px;
+        }
+
+        .countdown h2 {
+            color: #666;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }       
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .countdown-item {
+            text-align: center;
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            color: #2d4356;
+            font-weight: bold;
+        }
+
+        .countdown-label {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .separator {
+            font-size: 2.5rem;
+            color: #2d4356;
+            margin-top: -10px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .countdown-timer {
+                flex-wrap: wrap;
+            }
+
+            .subscribe-form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="canvas-container"></div>
+    <div class="container">
+        <div class="content">
+            <div class="text-content">
+                <h1>Under construction</h1>
+                <p>This page is under construction, but we are ready<br>to go!</p>
+                <form class="subscribe-form">
+                    <input type="email" placeholder="Your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="countdown">
+        <h2>WE ARE LIVE IN</h2>
+            <div class="countdown-timer">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">3</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="separator">:</div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">17</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="separator">:</div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">32</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="separator">:</div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">15</div>
+                    <div class="countdown-label">Seconds</div>
                 </div>
             </div>
-        </section>
-    </main>
-</div>
+        </div>
+    </div>
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-<!-- AJAX Script -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const filterForm = document.getElementById('filterForm');
-    const searchInput = document.getElementById('search');
-    const statusSelect = document.getElementById('status');
-    const filterSubmit = document.getElementById('filterSubmit'); // Search Button
-    const bannerTableBody = document.getElementById('bannerTableBody');
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        const container = document.getElementById('canvas-container');
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
 
-    // Function to fetch filtered results
-    function fetchFilteredResults(url = '/admin/banners') {
-        const formData = new FormData(filterForm); // Collect form data
-        const queryString = new URLSearchParams(formData).toString();
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
 
-        fetch(`${url}?${queryString}`)
-            .then(response => response.text())
-            .then(html => {
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = html;
+        // Camera position
+        camera.position.z = 5;
+        camera.position.y = 2;
 
-                // Update table body
-                const newTbody = tempDiv.querySelector('tbody');
-                if (newTbody) {
-                    bannerTableBody.innerHTML = newTbody.innerHTML;
-                }
+        // Controls
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.enableZoom = false;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 3;
 
-                // Update pagination
-                const newPagination = tempDiv.querySelector('.pagination');
-                const paginationWrapper = document.querySelector('#paginationWrapper');
-                if (newPagination && paginationWrapper) {
-                    paginationWrapper.innerHTML = newPagination.innerHTML;
-                }
-            })
-            .catch(error => console.error('Error fetching filtered results:', error));
-    }
+        // Load 3D Model
+        const loader = new GLTFLoader();
+        let duck;
+        loader.load('/assets/3d/duck.glb', (gltf) => {
+            duck = gltf.scene;
+            duck.scale.set(2, 2, 2);
+            duck.position.y = -1;
+            scene.add(duck);
 
-    // Reset the table to original unfiltered data when the page loads
-    // (only if no filters are applied in the URL)
-    const searchQuery = new URLSearchParams(window.location.search).get('search');
-    const statusQuery = new URLSearchParams(window.location.search).get('status');
+            // Add construction hat
+            const hatGeometry = new THREE.ConeGeometry(0.5, 0.7, 32);
+            const hatMaterial = new THREE.MeshPhongMaterial({ color: 0xFFD700 });
+            const hat = new THREE.Mesh(hatGeometry, hatMaterial);
+            hat.position.set(0, 0.8, 0);
+            duck.add(hat);
+        });
 
-    // If no filters are in the URL, display original data
-    if (!searchQuery && !statusQuery) {
-        fetchFilteredResults('/admin/banners'); // Show original data without filters
-    } else {
-        // Apply filters if query parameters exist
-        if (searchQuery) {
-            searchInput.value = searchQuery; // Set the search input value
+        // Animation
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
         }
-        if (statusQuery) {
-            statusSelect.value = statusQuery; // Set the status dropdown value
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', onWindowResize, false);
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
         }
 
-        fetchFilteredResults(); // Fetch filtered data based on the query parameters
-    }
+        // Countdown Timer
+        const countDownDate = new Date().getTime() + 
+            (30 * 24 * 60 * 60 * 1000) + // 30 days
+            (17 * 60 * 60 * 1000) + // 17 hours
+            (32 * 60 * 1000) + // 32 minutes
+            (15 * 1000); // 15 seconds
 
-    // Trigger filter on Search button click
-    filterSubmit.addEventListener('click', () => {
-        fetchFilteredResults(); // Fetch filtered results when button is clicked
-    });
+        const countdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
 
-    // Trigger search filter on typing with a delay (debounce)
-    let debounceTimeout;
-    searchInput.addEventListener('input', () => {
-        clearTimeout(debounceTimeout);
-        debounceTimeout = setTimeout(() => {
-            fetchFilteredResults(); // Trigger the filter on typing
-        }, 300); // Adjust the delay (300ms) if necessary
-    });
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Trigger status filter on change
-    statusSelect.addEventListener('change', () => {
-        fetchFilteredResults(); // Trigger the filter on status change
-    });
+            document.getElementById("days").textContent = String(days).padStart(2, '0');
+            document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+            document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
 
-    // Handle pagination links dynamically
-    document.addEventListener('click', function (event) {
-        if (event.target.tagName === 'A' && event.target.closest('.pagination')) {
-            event.preventDefault();
-            fetchFilteredResults(event.target.href);
-        }
-    });
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.querySelector(".countdown-timer").innerHTML = "EXPIRED";
+            }
+        }, 1000);
 
-    // Export buttons
-    document.getElementById('exportCsv').addEventListener('click', () => window.location.href = `/admin/banners/export/csv`);
-    document.getElementById('exportPdf').addEventListener('click', () => window.location.href = `/admin/banners/export/pdf`);
-});
-
-</script>
-
-@endsection
+        // Form submission
+        document.querySelector('.subscribe-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            alert(`Thank you for subscribing with: ${email}`);
+            this.reset();
+        });
+    </script>
+</body>
+</html>

@@ -145,11 +145,11 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="{{ url('/about-us') }}">About Us</a></li>
-                    <li><a href="{{ url('/finer-foundation')}}">Finer Foundation</a></li>
+                    <li><a href="{{ url('/finer-foundation')}}">FINER Foundation</a></li>
                     <li><a href="{{ url('/directors-&-past-presidents')}}">Directors & Past Presidents</a></li>
                 </ul>
             </li>
-            <li><a href="#initiative">Initiative</a></li>
+            <li><a href="{{ url('/under-construction')}}">Initiative</a></li>
             <li class="dropdown">
                 <a href="#events">
                     Events <span class="dropdown-icon">▼</span>
@@ -169,7 +169,7 @@
             </li>
             
             <li><a href="{{ url('/press-releases')}}">Publications</a></li>
-            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="{{ url('/under-construction')}}">Gallery</a></li>
             <li><a href="{{url('/Contact-Us')}}">Contact Us</a></li>
         </ul>
         <button class="member-btn">Become a Member</button>

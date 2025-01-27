@@ -4,14 +4,14 @@
 @endpush
 @section('content')
     <div class="header">
-        <h1>Finer Foundation</h1>
+        <h1>FINER Foundation</h1>
         <img src="assests/about-us-bg.jpg" alt="Background Image">
 
     </div>
 
     <div class="content">
         <div class="section">
-            <h2 class="section-title">Finer Foundation</h2>
+            <h2 class="section-title">FINER Foundation</h2>
             <p class="text-content">
                 FINER continuously assists industry to identify and execute CSR programs and also partners with civil society organizations through members to initiate, implement and execute programs on diverse domains of inclusive development.
             </p>
@@ -41,7 +41,7 @@
                     </ul>
 
                     <div class="finer-services">
-                        <h2 class="section-title">Finer Services And Focus Area Of Work</h2>
+                        <h2 class="section-title">FINER Services And Focus Area Of Work</h2>
                         <ul class="bullet-list">
                             <li>Policy advocacy</li>
                             <li>Knowledge dissemination</li>
@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="chart-container" id="membershipChart">
-                <h2 class="section-title-membership">Finer Membership</h2>
+                <h2 class="section-title-membership">FINER Membership</h2>
                 </div>
             </div>
         </div>

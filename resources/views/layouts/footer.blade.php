@@ -9,7 +9,6 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    /* font-size: small; */
 }
 
 .footer {
@@ -167,7 +166,7 @@ body {
             <h3>About</h3>
             <ul>
                 <li><a href="{{ url('/about-us') }}">About Us</a></li>
-                <li><a href="{{ url('/finer-foundation')}}">Finer Foundation</a></li>
+                <li><a href="{{ url('/finer-foundation')}}">FINER Foundation</a></li>
                 <li><a href="{{ url('/directors-&-past-presidents')}}">Directors & Past Presidents</a></li>
             </ul>
         </div>
