@@ -10,15 +10,17 @@
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f4f4f4;
-    /* overflow-x: hidden; Prevent horizontal scrolling */
+    /* overflow-x: hidden;  */
+    
 }
 
-html, body {
-    min-height: 100%; /* Ensure the page extends with content */
-    overflow-y: auto; /* Allow vertical scrolling */
+ html, body {
+    min-width: auto !important;
+    min-height: 100%; 
+    overflow-y: auto; 
 }
 
-/* Section Styling */
+/* Section Styling 
 section {
     padding: 50px 20px;
     text-align: center;
@@ -26,6 +28,6 @@ section {
 
 section:nth-child(even) {
     background-color: #f1f1f1;
-}
+} */
 
 

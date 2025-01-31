@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Navbar</title>
+    <title>Responsive Top Navbar</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
     <style>
         * {
             margin: 0;
@@ -14,11 +13,10 @@
         }
 
         body {
-            font-size: small;
+            font-size: 16px;
             font-family: 'Poppins', sans-serif;
         }
 
-        /* Navbar styling */
         .nav-container {
             position: fixed;
             top: 0;
@@ -29,7 +27,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px 40px;
+            padding: 10px 20px;
             z-index: 1000;
             transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
         }
@@ -38,10 +36,21 @@
             transform: translateY(-100%);
         }
 
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 45px;
+            height: 50px;
+        }
+
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 20px;
+            gap: 10px;
             align-items: center;
         }
 
@@ -63,10 +72,8 @@
             background-color: rgba(255, 255, 255, 0.1);
         }
 
-        /* Dropdown Styling */
         .dropdown-icon {
             font-size: 0.8em;
-            transform: rotate(0deg);
             transition: transform 0.3s ease;
         }
 
@@ -103,18 +110,6 @@
             background-color: rgba(255, 255, 255, 0.1);
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo {
-            width: 45px;
-            height: 50px;
-        }
-
-        /* Button styling */
         .member-btn {
             background-color: rgba(255, 161, 19, 1);
             color: white;
@@ -130,12 +125,72 @@
             background-color: rgba(255, 145, 0, 1);
             transform: scale(1.05);
         }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 2px 0;
+            transition: 0.4s;
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: rgba(45, 51, 138, 0.95);
+                padding: 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                width: 100%;
+            }
+
+            .dropdown-menu {
+                position: static;
+                background-color: transparent;
+                box-shadow: none;
+                display: none;
+                padding-left: 20px;
+            }
+
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .member-btn {
+                margin-top: 10px;
+            }
+        }
     </style>
 </head>
 <body>
     <nav class="nav-container">
         <div class="logo-container">
             <img src="assests/darkbackground_logo.png" alt="Logo" class="logo">
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
         <ul class="nav-links">
             <li><a href="/">Home</a></li>
@@ -144,19 +199,19 @@
                     About <span class="dropdown-icon">▼</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ url('/about-us') }}">About Us</a></li>
-                    <li><a href="{{ url('/finer-foundation')}}">FINER Foundation</a></li>
-                    <li><a href="{{ url('/directors-&-past-presidents')}}">Directors & Past Presidents</a></li>
+                    <li><a href="/about-us">About Us</a></li>
+                    <li><a href="/finer-foundation">FINER Foundation</a></li>
+                    <li><a href="/directors-&-past-presidents">Directors & Past Presidents</a></li>
                 </ul>
             </li>
-            <li><a href="{{ url('/under-construction')}}">Initiative</a></li>
+            <li><a href="/under-construction">Initiative</a></li>
             <li class="dropdown">
                 <a href="#events">
                     Events <span class="dropdown-icon">▼</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ url('/upcoming-events') }}">Upcoming Events</a></li>
-                    <li><a href="{{ url('/past-events')}}">Past Events</a></li>
+                    <li><a href="/upcoming-events">Upcoming Events</a></li>
+                    <li><a href="/past-events">Past Events</a></li>
                 </ul>
             </li>
             <li class="dropdown">
@@ -164,37 +219,58 @@
                 Knowledge <span class="dropdown-icon">▼</span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{url('/magazines')}}">Magazines</a></li>
+                    <li><a href="/magazines">Magazines</a></li>
                 </ul>
             </li>
-            
-            <li><a href="{{ url('/press-releases')}}">Publications</a></li>
-            <li><a href="{{ url('/under-construction')}}">Gallery</a></li>
-            <li><a href="{{url('/Contact-Us')}}">Contact Us</a></li>
+            <li><a href="/press-releases">Publications</a></li>
+            <li><a href="/under-construction">Gallery</a></li>
+            <li><a href="/Contact-Us">Contact Us</a></li>
+            <li><button class="member-btn">Become a Member</button></li>
         </ul>
-        <button class="member-btn">Become a Member</button>
     </nav>
 
     <script>
         const nav = document.querySelector('.nav-container');
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        const dropdowns = document.querySelectorAll('.dropdown');
         let lastScrollY = window.scrollY;
 
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
 
             if (currentScrollY > lastScrollY) {
-                nav.classList.add('hidden'); // Hide on scroll down
+                nav.classList.add('hidden');
             } else {
-                nav.classList.remove('hidden'); // Show on scroll up
+                nav.classList.remove('hidden');
             }
 
             lastScrollY = currentScrollY;
         });
 
-        // Redirect to Become a Member page on button click
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+
         const memberButton = document.querySelector('.member-btn');
         memberButton.addEventListener('click', () => {
-            window.location.href = '/become-a-member'; // Update with your actual route URL
+            window.location.href = '/become-a-member';
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                dropdowns.forEach(dropdown => dropdown.classList.remove('active'));
+            }
         });
     </script>
 </body>

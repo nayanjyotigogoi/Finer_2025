@@ -22,9 +22,9 @@ use App\Http\Controllers\ContactController;
 |
 */
 
-Route::get('/test', function () {
-    return view('welcome');
-});
+// Route::get('/test', function () {
+//     return view('welcome');
+// });
 
 //login route
 

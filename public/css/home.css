@@ -533,10 +533,8 @@ display: none; /* Chrome, Safari, and Edge */
 
 
 
-/* sticky-header scrollbar style */
-
+/* Sticky Header Section */
 .sticky-section {
-    /* margin: 15px 0px; */
     background: #1a237e;
     overflow: hidden;
     position: relative;
@@ -548,36 +546,18 @@ display: none; /* Chrome, Safari, and Edge */
     scroll-snap-align: start;
 }
 
+/* Container for sticky section */
 .sticky-container {
     position: relative;
     width: 100%;
     height: 100%;
     display: flex;
     gap: 2rem;
+    flex-direction: row; /* Default to row for desktop */
+    flex-wrap: nowrap; /* Prevent wrapping */
 }
 
-.sticky-background-pattern {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-}
-
-.sticky-half-circle {
-    position: absolute;
-    width: 650px;
-    height: 800px;
-    border: 40px solid rgba(255, 165, 0, 0.1);
-    border-radius: 50%;
-    top: -50px;
-    left: -350px;
-    z-index: 1;
-    transition: transform 0.3s ease-out;
-}
-
+/* Section holding the sticky content */
 .sticky-vision-section {
     flex: 1;
     position: sticky;
@@ -592,6 +572,7 @@ display: none; /* Chrome, Safari, and Edge */
     justify-content: center;
 }
 
+/* Heading styles */
 .sticky-vision-section h2 {
     color: #ffa726;
     font-size: 1.2rem;
@@ -610,32 +591,23 @@ display: none; /* Chrome, Safari, and Edge */
 }
 
 .sticky-read-more {
-    display: inline-block; /* Prevent full width */
-    padding: 0.8rem 2rem; /* Button padding */
-    background: #ffa726; /* Button background color */
-    color: white; /* Button text color */
-    text-decoration: none; /* Remove underline */
-    border-radius: 5px; /* Rounded corners */
-    font-weight: bold; /* Bold text */
-    transition: transform 0.3s ease; /* Smooth hover effect */
-    max-width: max-content; /* Ensure the width matches the content */
-    text-align: center; /* Center the text */
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: #ffa726;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+    max-width: max-content;
+    text-align: center;
 }
-
 
 .sticky-read-more:hover {
     transform: translateY(-2px);
 }
 
-.sticky-cards-grid {
-scrollbar-width: none; /* For Firefox */
--ms-overflow-style: none; /* For Internet Explorer and Edge */
-}
-
-.sticky-cards-grid::-webkit-scrollbar {
-display: none; /* For Chrome, Safari, and Opera */
-}
-
+/* Cards Grid */
 .sticky-cards-grid {
     margin-top: 40px;
     flex: 2;
@@ -651,6 +623,7 @@ display: none; /* For Chrome, Safari, and Opera */
     scroll-snap-type: y mandatory;
 }
 
+/* Card styles */
 .sticky-card {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
@@ -665,6 +638,7 @@ display: none; /* For Chrome, Safari, and Opera */
     transform: translateY(-5px);
 }
 
+/* Icon inside card */
 .sticky-card-icon {
     width: 60px;
     height: 60px;
@@ -682,32 +656,51 @@ display: none; /* For Chrome, Safari, and Opera */
     fill: white;
 }
 
-
-/* .sticky-next-section {
-    width: 100%;
-    height: 100vh;
-    background: #283593;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
-} */
-
-@media (max-width: 768px) { 
-    .container {
-        flex-direction: column;
-    }
-
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    /* Adjust sticky header position for mobile */
     .sticky-vision-section {
-        position: static;
+        position: static; /* Remove sticky on small screens */
         max-width: 100%;
         height: auto;
+        padding: 20px; /* Reduced padding */
     }
 
     .sticky-cards-grid {
         max-height: none;
-        overflow-y: visible;
+        overflow-y: visible; /* Allow overflow on smaller screens */
+    }
+
+    /* Adjust font sizes for smaller screens */
+    .sticky-header3 {
+        font-size: 18px;
+    }
+
+    .sticky-vision-section h2 {
+        font-size: 1rem;
+    }
+
+    /* Stack the container flex vertically */
+    .sticky-container {
+        flex-direction: column;
+    }
+
+    /* Social and content areas centered */
+    .sticky-cards-grid {
+        padding: 1rem;
+        grid-template-columns: 1fr; /* Stack cards vertically */
+    }
+
+    /* Ensure each card's content fits */
+    .sticky-card {
+        padding: 1.5rem;
+        width: 100%;
+    }
+
+    /* Adjust for smaller screen sizes */
+    .sticky-card-icon svg {
+        width: 30px;
+        height: 30px;
     }
 }
 

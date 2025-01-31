@@ -22,16 +22,18 @@ body {
 
 .footer-content {
     display: flex;
+    flex-wrap: wrap; /* Enables stacking on small screens */
     justify-content: space-between;
+    gap: 20px;
     position: relative;
     z-index: 2;
 }
 
 .footer-section {
-    width: 110px;
-    margin-right: 40px;
+    flex: 1;
+    min-width: 80px; /* Prevent sections from shrinking too much */
+    margin-bottom: 20px;
 }
-
 
 .footer-section-address h3{
     font-size: 18px;
@@ -146,6 +148,33 @@ body {
     bottom: -150px;
     right: -150px;
 }
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        align-items: center; /* Center-align sections */
+    }
+
+    .footer-section {
+        text-align: center;
+    }
+
+    .footer-section ul ul {
+        position: relative; /* Make submenus inline for smaller screens */
+        padding-left: 0;
+        box-shadow: none;
+        background-color: transparent;
+    }
+
+    .footer-section ul li:hover > ul {
+        display: block; /* Always show submenu on hover for mobile-friendly behavior */
+    }
+
+    .social-icons {
+        justify-content: center; /* Center-align social icons */
+    }
+}
 </style>
 </head>
 <body>
@@ -222,7 +251,7 @@ body {
 
     <div class="copyright">
         © 2025 | All Rights Reserved |
-        Crafted by <a href="http://indigiconsulting.com./">Indigi Consulting and Solutions Pvt Ltd</a>
+        Crafted by <a href="http://indigiconsulting.com./" style="color: #FFA500;">Indigi Consulting and Solutions Pvt Ltd</a>
     </div>
 </footer>
 
