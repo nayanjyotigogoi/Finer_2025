@@ -745,7 +745,7 @@ display: none; /* Chrome, Safari, and Edge */
 }
 
 .vision-title {
-    font-size: 2em;
+    font-size: 1.8em;
     line-height: 1.4;
     font-weight: bold;
 }
@@ -1636,3 +1636,4 @@ background-position: center;
         height: 160px;
     }
 }
+

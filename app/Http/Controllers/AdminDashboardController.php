@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Banner;
+use App\Models\User;
 use App\Models\Event;
 use App\Models\press_release;
 use App\Models\director_profile;
 use App\Models\past_president;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class AdminDashboardController extends Controller
 {
@@ -71,5 +74,155 @@ class AdminDashboardController extends Controller
     
         // Pass the data to the dashboard view
         return view('admin.index', compact('recentActivities'));
+    }
+
+    // Users Management
+    public function usersIndex(Request $request)
+    {
+        // Create query for User model
+        $query = User::query();
+
+        // Search by Name or Email
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                  ->orWhere('email', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        // Filter by Status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Fetch paginated users
+        $users = $query->latest()->paginate(10);
+
+        // Handle AJAX request for dynamic loading
+        if ($request->ajax()) {
+            return view('admin.users.partials.table', compact('users'))->render();
+        }
+
+        return view('admin.users.view_users', compact('users'));
+    }
+
+    public function usersCreate()
+    {
+        return view('admin.users.create_user');
+    }
+
+    public function usersStore(Request $request)
+    {
+        // Validate user input
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'phone' => 'required|digits_between:7,15',
+            'designation' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'email' => 'required|email|unique:users,email',
+            'status' => 'required|in:active,inactive',
+            'order' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Handle file upload for image
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('users', 'public');
+        }
+
+        // Create the new user
+        User::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'designation' => $request->designation,
+            'description' => $request->description,
+            'email' => $request->email,
+            'status' => $request->status,
+            'order' => $request->order,
+            'image' => $imagePath,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return redirect()->route('admin.users.view_user')->with('success', 'User account created successfully.');
+    }
+
+    public function usersEdit($id)
+    {
+        // Get user by id
+        $user = User::findOrFail($id);
+
+        // Pass user data to the view
+        return view('admin.users.edit_user', compact('user'));
+    }
+
+    public function usersUpdate(Request $request, $id)
+    {
+        // Validate input
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'phone' => 'required|digits_between:7,15',
+            'designation' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'status' => 'required|in:active,inactive',
+            'order' => 'required|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        // Get the user to update
+        $user = User::findOrFail($id);
+
+        // Handle image upload if exists
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($user->image) {
+                Storage::disk('public')->delete($user->image);
+            }
+            $imagePath = $request->file('image')->store('users', 'public');
+        } else {
+            $imagePath = $user->image;
+        }
+
+        // Update user data
+        $user->update([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'designation' => $request->designation,
+            'description' => $request->description,
+            'email' => $request->email,
+            'status' => $request->status,
+            'order' => $request->order,
+            'image' => $imagePath,
+            'password' => $request->filled('password') ? Hash::make($request->password) : $user->password,
+        ]);
+
+        return redirect()->route('admin.users.view_user')->with('success', 'User account updated successfully.');
+    }
+
+    public function usersDelete($id)
+    {
+        // Find user by id
+        $user = User::findOrFail($id);
+
+        // Delete user image if exists
+        if ($user->image) {
+            Storage::disk('public')->delete($user->image);
+        }
+
+        // Delete the user
+        $user->delete();
+
+        return redirect()->route('admin.users.view_user')->with('success', 'User account deleted successfully.');
     }
 }

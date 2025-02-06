@@ -15,7 +15,7 @@ class press_release extends Model
     // The attributes that are mass assignable
     protected $fillable = [
         'page_title',
-        'photos',
+        'image',
         'description',
         'status',
         'pdf',

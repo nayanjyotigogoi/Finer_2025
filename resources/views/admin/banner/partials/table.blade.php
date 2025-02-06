@@ -18,7 +18,7 @@
             <td>{{ $banner->caption }}</td>
             <td>
                 @if($banner->image)
-                    <img src="{{ asset('storage/' . $banner->image) }}" alt="Banner Image" width="50" height="50">
+                    <img src="{{ asset('storage/banners/' . basename($banner->image)) }}" alt="Banner Image" width="50" height="50" class="img-thumbnail">
                 @else
                     No Image
                 @endif
@@ -45,4 +45,3 @@
         @endforelse
     </tbody>
 </table>
-

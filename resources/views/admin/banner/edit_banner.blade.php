@@ -14,8 +14,7 @@
                             <form 
                                 action="{{ route('banners.update', $banner->id) }}" 
                                 method="POST" 
-                                enctype="multipart/form-data"
-                            >
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
@@ -64,7 +63,7 @@
                                     @enderror
                                     @if($banner->image)
                                         <img 
-                                            src="{{ asset('storage/' . $banner->image) }}" 
+                                            src="{{ asset('storage/banners/' . basename($banner->image)) }}" 
                                             alt="Banner Image" 
                                             class="img-thumbnail mt-2" 
                                             width="150"
@@ -104,27 +103,26 @@
 
                                 <!-- Status -->
                                 <div class="mb-3">
-    <label for="status" class="form-label">Status</label>
-    <select 
-        class="form-select @error('status') is-invalid @enderror" 
-        id="status" 
-        name="status" 
-        required
-    >
-        <option value="1" {{ old('status', $banner->status) == 1 ? 'selected' : '' }}>Active</option>
-        <option value="0" {{ old('status', $banner->status) == 0 ? 'selected' : '' }}>Inactive</option>
-    </select>
-    @error('status')
-        <div class="invalid-feedback">{{ $message }}</div>
-    @enderror
-</div>
-
+                                    <label for="status" class="form-label">Status</label>
+                                    <select 
+                                        class="form-select @error('status') is-invalid @enderror" 
+                                        id="status" 
+                                        name="status" 
+                                        required>
+                                        <option value="1" {{ old('status', $banner->status) == 1 ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ old('status', $banner->status) == 0 ? 'selected' : '' }}>Inactive</option>
+                                    </select>
+                                    @error('status')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
 
                                 <!-- Submit Button -->
                                 <div class="d-flex justify-content-end">
                                     <button type="submit" class="btn btn-primary">Update Banner</button>
                                 </div>
-                            </form><!-- End Form -->
+                            </form>
+                            <!-- End Form -->
 
                         </div>
                     </div>

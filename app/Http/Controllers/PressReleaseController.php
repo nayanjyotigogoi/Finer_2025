@@ -24,14 +24,16 @@ class PressReleaseController extends Controller
     
         $pressReleases = $query->paginate(10);
     
+        // Handle AJAX request
         if ($request->ajax()) {
-            return response()->json(view('admin.press_release.partials.press_table', compact('pressReleases'))->render());
+            return response()->json([
+                'html' => view('admin.press_release.partials.press_table', compact('pressReleases'))->render()
+            ]);
         }
     
         return view('admin.press_release.view_press_release', compact('pressReleases'));
     }
-    
-    
+
     // Show the form for creating a new press release
     public function create()
     {
@@ -43,30 +45,21 @@ class PressReleaseController extends Controller
     {
         $request->validate([
             'page_title' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Updated field name
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
             'description' => 'required|string',
             'status' => 'required|in:0,1',
-            'pdf' => 'nullable|mimes:pdf|max:10240', // Validate PDF
         ]);
 
         $imagePath = null;
-        if ($request->hasFile('image')) { // Updated field name
-            $imagePath = $request->file('image')->store('press_releases', 'public'); // Updated field name
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('press_releases', 'public'); // Store image in 'public/storage/press_releases/'
         }
-
-        // Upload the PDF if exists
-        $pdfPath = null;
-        if ($request->hasFile('pdf')) {
-            $pdfPath = $request->file('pdf')->store('press_releases', 'public');
-        }
-        
 
         press_release::create([
             'page_title' => $request->page_title,
-            'image' => $imagePath, // Updated field name
+            'image' => $imagePath, // Store the image path
             'description' => $request->description,
             'status' => $request->status,
-            'pdf' => $pdfPath,
         ]);
 
         return redirect()->route('press_releases.view')->with('success', 'Press release added successfully!');
@@ -84,41 +77,32 @@ class PressReleaseController extends Controller
     {
         $request->validate([
             'page_title' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Updated field name
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate image
             'description' => 'required|string',
             'status' => 'required|in:0,1',
-            'pdf' => 'nullable|mimes:pdf|max:10240', // Validate PDF
         ]);
 
         $pressRelease = press_release::findOrFail($id);
-        // Update the image if exists
-        $imagePath = $request->file('image') ? $request->file('image')->store('press_releases') : $pressRelease->image; // Updated field name
 
-        if ($request->hasFile('image')) { // Updated field name
+        // Update the image if new image is provided
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
             if ($pressRelease->image) {
-                \Storage::disk('public')->delete($pressRelease->image); // Updated field name
+                \Storage::disk('public')->delete($pressRelease->image);
             }
-            $imagePath = $request->file('image')->store('press_releases', 'public'); // Updated field name
-            $pressRelease->image = $imagePath; // Updated field name
-        }
 
-        // Update the PDF if exists
-        if ($request->hasFile('pdf')) {
-            if ($pressRelease->pdf) {
-                \Storage::disk('public')->delete($pressRelease->pdf);
-            }
-            $pdfPath = $request->file('pdf')->store('press_releases', 'public');
+            // Store the new image and get the path
+            $imagePath = $request->file('image')->store('press_releases', 'public');
+            $pressRelease->image = $imagePath;
         } else {
-            $pdfPath = $pressRelease->pdf;
+            $imagePath = $pressRelease->image;
         }
-
 
         $pressRelease->update([
             'page_title' => $request->page_title,
-            'image' => $imagePath, // Updated field name
+            'image' => $imagePath, // Updated image path
             'description' => $request->description,
             'status' => $request->status,
-            'pdf' => $pdfPath,
         ]);
 
         return redirect()->route('press_releases.view')->with('success', 'Press release updated successfully.');
@@ -129,25 +113,23 @@ class PressReleaseController extends Controller
     {
         $pressRelease = press_release::findOrFail($id);
 
-        if ($pressRelease->image) { // Updated field name
-            \Storage::disk('public')->delete($pressRelease->image); // Updated field name
-        }
-
-        if ($pressRelease->pdf) {
-            \Storage::disk('public')->delete($pressRelease->pdf);
+        // Delete the image if it exists
+        if ($pressRelease->image) {
+            \Storage::disk('public')->delete($pressRelease->image);
         }
 
         $pressRelease->delete();
 
         return redirect()->route('press_releases.view')->with('success', 'Press release deleted successfully.');
     }
-    public function view_press_releases() {
+
+    // View press releases with pagination
+    public function view_press_releases()
+    {
         // Fetch press releases with pagination (6 per page)
         $pressReleases = press_release::where('status', '1')->paginate(3);
 
-    
         // Pass the paginated data to the view
         return view('publications.press_release', compact('pressReleases'));
     }
-    
 }

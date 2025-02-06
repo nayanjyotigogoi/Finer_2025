@@ -14,7 +14,7 @@
         <td>{{ $event->order }}</td>
         <td>
             @if($event->image)
-                <img src="{{ asset('storage/' . $event->image) }}" alt="Event Image" class="img-thumbnail" width="100">
+                <img src="{{ asset('storage/events/' . basename($event->image)) }}" alt="Event Image" class="img-thumbnail" width="100">
             @else
                 <span class="text-muted">No Image</span>
             @endif

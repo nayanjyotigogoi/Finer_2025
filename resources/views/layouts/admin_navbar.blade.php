@@ -86,135 +86,90 @@
   </header><!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
+  <!-- ======= Sidebar ======= -->
   <aside id="sidebar" class="sidebar">
-
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="/admin">
+        <a class="nav-link collapsed" href="/admin">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#users-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-plus"></i><span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="users-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li><a href="{{ route('admin.users.view_user') }}"><i class="bi bi-list-ul"></i><span>View Users</span></a></li>
+          <li><a href="{{ route('admin.users.create_user') }}"><i class="bi bi-plus-circle"></i><span>Create Account</span></a></li>
+        </ul>
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-postcard-fill"></i><span>Banner</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-postcard-fill"></i><span>Banner</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{ route('banners.view') }}">
-              <i class="bbi bi-list-ul"></i><span>View Banner</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('banners.create') }}">
-              <i class="bi bi-plus-circle"></i><span>Add Banner</span>
-            </a>
-          </li>
+        <ul id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li><a href="{{ route('banners.view') }}"><i class="bi bi-list-ul"></i><span>View Banner</span></a></li>
+          <li><a href="{{ route('banners.create') }}"><i class="bi bi-plus-circle"></i><span>Add Banner</span></a></li>
         </ul>
-      </li><!-- End Components Nav -->
+      </li>
 
+      <!-- ✅ Fixed Events Section -->
       <li class="nav-item">
-        <a class="nav-link " data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#"> <!-- Added 'collapsed' -->
           <i class="bi bi-journal-text"></i><span>Events</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{ route('events.view') }}">
-              <i class="bi bi-list-ul"></i><span>View Events</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('events.create') }}">
-              <i class="bi bi-plus-circle"></i><span>Add Events</span>
-            </a>
-          </li>
+          <li><a href="{{ route('events.view') }}"><i class="bi bi-list-ul"></i><span>View Events</span></a></li>
+          <li><a href="{{ route('events.create') }}"><i class="bi bi-plus-circle"></i><span>Add Events</span></a></li>
         </ul>
-      </li><!-- End Forms Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>Press Release</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{ route('press_releases.view') }}">
-              <i class="bi bi-list-ul"></i><span>View Press Release</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('press_releases.create') }}">
-              <i class="bi bi-plus-circle"></i><span>Add Press Release</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
-
-       <!-- Magazines Section -->
-       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#magazines-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-book"></i><span>Magazines</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="magazines-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{ route('magazines.view') }}">
-              <i class="bi bi-list-ul"></i><span>View Magazines</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('magazines.create') }}">
-              <i class="bi bi-plus-circle"></i><span>Add Magazine</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Magazines Nav -->
-
-
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-people"></i><span>Board Members</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="{{ route('director_profiles.view') }}">
-              <i class="bi bi-list-ul"></i><span>View Member</span>
-            </a>
-          </li>
-          <li>
-            <a href="{{ route('director_profiles.create') }}">
-              <i class="bi bi-plus-circle"></i><span>Add Member</span>
-            </a>
-          </li>
+        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li><a href="{{ route('press_releases.view') }}"><i class="bi bi-list-ul"></i><span>View Press Release</span></a></li>
+          <li><a href="{{ route('press_releases.create') }}"><i class="bi bi-plus-circle"></i><span>Add Press Release</span></a></li>
         </ul>
       </li>
 
-      <!-- past president -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#magazines-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-book"></i><span>Magazines</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="magazines-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li><a href="{{ route('magazines.view') }}"><i class="bi bi-list-ul"></i><span>View Magazines</span></a></li>
+          <li><a href="{{ route('magazines.create') }}"><i class="bi bi-plus-circle"></i><span>Add Magazine</span></a></li>
+        </ul>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-people"></i><span>Board Members</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="charts-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li><a href="{{ route('director_profiles.view') }}"><i class="bi bi-list-ul"></i><span>View Member</span></a></li>
+          <li><a href="{{ route('director_profiles.create') }}"><i class="bi bi-plus-circle"></i><span>Add Member</span></a></li>
+        </ul>
+      </li>
+
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#past-presidents-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-person-circle"></i><span>Past Presidents</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-person-circle"></i><span>Past Presidents</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-         <ul id="past-presidents-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li>
-                <a href="{{ route('past_presidents.view') }}">
-                    <i class="bi bi-list-ul"></i><span>All Past Presidents</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('past_presidents.create') }}">
-                    <i class="bi bi-plus-circle"></i><span>Add New Past President</span>
-                </a>
-            </li>
-
+        <ul id="past-presidents-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li><a href="{{ route('past_presidents.view') }}"><i class="bi bi-list-ul"></i><span>All Past Presidents</span></a></li>
+          <li><a href="{{ route('past_presidents.create') }}"><i class="bi bi-plus-circle"></i><span>Add New Past President</span></a></li>
         </ul>
-      </li><!-- End Past Presidents Nav -->
-<!-- End Charts Nav -->
-
-
+      </li>
     </ul>
-
-  </aside><!-- End Sidebar-->
+  </aside>
+  <!-- End Sidebar -->
 
   <!-- Vendor JS Files -->
   <script src="/admin_assets/vendor/apexcharts/apexcharts.min.js"></script>

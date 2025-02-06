@@ -59,7 +59,6 @@
                                     @enderror
                                 </div>
 
-
                                 <!-- Order -->
                                 <div class="mb-3">
                                     <label for="order" class="form-label">Order</label>
@@ -78,7 +77,7 @@
                                     @enderror
 
                                     @if($event->image)
-                                    <img src="{{ asset('storage/' . $event->image) }}" class="mt-2" width="150">
+                                    <img src="{{ asset('storage/events/' . basename($event->image)) }}" class="mt-2" width="150">
                                     @endif
                                 </div>
 

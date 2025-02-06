@@ -29,7 +29,7 @@
                                             <i class="fas fa-search"></i> 
                                         </button>
 
-                                        <button type="button" id="refreshButton" class="btn btn-secondary">
+                                        <button type="submit" id="refreshButton" class="btn btn-secondary">
                                             <i class="fas fa-sync-alt"></i>
                                         </button>
                                     </div>
@@ -105,7 +105,9 @@
         // Refresh button functionality
         refreshButton.addEventListener('click', function () {
             filterForm.reset(); // Reset form fields
-            fetchFilteredResults(); // Reload original data
+
+            // Fetch data without any filters (clear query params)
+            fetchFilteredResults('{{ route('press_releases.view') }}?t=' + new Date().getTime());
         });
     });
 </script>
