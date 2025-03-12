@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @push('styles')
-<link href="{{ asset('zzzzcss/become_member.css') }}" rel="stylesheet">
+<link href="{{ asset('css/become_member.css') }}" rel="stylesheet">
 @endpush
 
 @section('content')

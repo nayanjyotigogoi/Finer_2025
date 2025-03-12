@@ -53,32 +53,58 @@ class EventController extends Controller
     // Store New Event
     public function store(Request $request)
     {
+        // Validate the incoming request
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
             'event_date'  => 'required|date',
             'status'      => 'required|in:0,1',
             'order'       => 'required|integer',
-            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
+    
         // Handle image upload
-        $imagePath = null;
+        $imagePath = 'assets/event.jpeg'; // Default image
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('events', 'public'); // Store in public/storage/events
+            $image = $request->file('image');
+    
+            // Validate MIME type
+            $finfo = new \finfo(FILEINFO_MIME_TYPE);
+            $mime_type = $finfo->file($image);
+            if (!in_array($mime_type, ['image/png', 'image/jpeg'])) {
+                return redirect()->back()->with('error', 'File type not allowed');
+            }
+    
+            // Prevent double dot filenames
+            if (substr_count($image->getClientOriginalName(), '.') > 1) {
+                return redirect()->back()->with('error', 'Double dot in filename');
+            }
+    
+            // Validate file extension
+            $extension = $image->getClientOriginalExtension();
+            if (!in_array($extension, ['jpg', 'jpeg', 'png'])) {
+                return redirect()->back()->with('error', 'File type not allowed');
+            }
+    
+            // Generate unique image name and move it to public/uploads/events
+            $imageName = date('dmY_His') . '.' . $extension;
+            $image->move(public_path('uploads/events'), $imageName);
+            $imagePath = 'events/' . $imageName;
         }
-
+    
+        // Store data in the database
         Event::create([
             'title'       => $request->title,
-            'description' => $request->description,
+            'description' => $request->description ?? '',
             'event_date'  => $request->event_date,
             'status'      => $request->status,
             'order'       => $request->order,
             'image'       => $imagePath,
         ]);
-
+    
         return redirect()->route('events.view')->with('success', 'Event added successfully!');
     }
+    
 
     // Edit Event Form
     public function edit($id)
@@ -87,41 +113,110 @@ class EventController extends Controller
         return view('admin.events.edit_events', compact('event'));
     }
 
-    // Update Event
+    //update functionality
     public function update(Request $request, $id)
     {
+        // Find the event
+        $event = Event::findOrFail($id);
+
+        // Validate the request
         $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
             'event_date'  => 'required|date',
             'status'      => 'required|in:0,1',
             'order'       => 'required|integer',
-            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $event = Event::findOrFail($id);
-
-        // Handle new image upload
+        // Handle image update
         if ($request->hasFile('image')) {
-            // Delete old image if it exists
-            if ($event->image) {
-                Storage::disk('public')->delete('events/' . basename($event->image));
+            $image = $request->file('image');
+
+            // Validate MIME type
+            $finfo = new \finfo(FILEINFO_MIME_TYPE);
+            $mime_type = $finfo->file($image);
+            if (!in_array($mime_type, ['image/png', 'image/jpeg'])) {
+                return redirect()->back()->with('error', 'File type not allowed');
             }
 
-            $imagePath = $request->file('image')->store('events', 'public');
+            // Prevent double dot filenames
+            if (substr_count($image->getClientOriginalName(), '.') > 1) {
+                return redirect()->back()->with('error', 'Double dot in filename');
+            }
+
+            // Validate file extension
+            $extension = $image->getClientOriginalExtension();
+            if (!in_array($extension, ['jpg', 'jpeg', 'png'])) {
+                return redirect()->back()->with('error', 'File type not allowed');
+            }
+
+            // Generate unique image name and move it to public/uploads/events
+            $imageName = date('dmY_His') . '.' . $extension;
+            $image->move(public_path('uploads/events'), $imageName);
+            $imagePath = 'events/' . $imageName;
+
+            // Delete the old image if it exists and is not the default
+            if ($event->image && $event->image !== 'assets/event.jpeg') {
+                $oldImagePath = public_path('uploads/' . $event->image);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
+            }
+
+            // Update the image path
             $event->image = $imagePath;
         }
 
+        // Update the event details
         $event->update([
             'title'       => $request->title,
-            'description' => $request->description,
+            'description' => $request->description ?? '',
             'event_date'  => $request->event_date,
             'status'      => $request->status,
             'order'       => $request->order,
+            'image'       => $event->image, // Retain previous image if not updated
         ]);
 
-        return redirect()->route('events.view')->with('success', 'Event updated successfully.');
+        return redirect()->route('events.view')->with('success', 'Event updated successfully!');
     }
+
+
+    // Update Event
+    // public function update(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'title'       => 'required|string|max:255',
+    //         'description' => 'nullable|string',
+    //         'event_date'  => 'required|date',
+    //         'status'      => 'required|in:0,1',
+    //         'order'       => 'required|integer',
+    //         'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //     ]);
+
+    //     $event = Event::findOrFail($id);
+
+    //     // Handle new image upload
+    //     if ($request->hasFile('image')) {
+    //         // Delete old image if it exists
+    //         if ($event->image) {
+    //             Storage::disk('public')->delete('events/' . basename($event->image));
+    //         }
+
+    //         $imagePath = $request->file('image')->store('events', 'public');
+    //         $event->image = $imagePath;
+    //     }
+
+    //     $event->update([
+    //         'title'       => $request->title,
+    //         'description' => $request->description,
+    //         'event_date'  => $request->event_date,
+    //         'status'      => $request->status,
+    //         'order'       => $request->order,
+    //     ]);
+
+    //     return redirect()->route('events.view')->with('success', 'Event updated successfully.');
+    // }
 
     // Delete Event
     public function destroy($id)

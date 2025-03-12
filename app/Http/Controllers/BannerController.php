@@ -81,10 +81,30 @@ class BannerController extends Controller
         $imagePath = 'assets/user.png'; // Default image
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->move(public_path('storage/banners'), $imageName);
+
+            $finfo = new \finfo(FILEINFO_MIME_TYPE);
+            $mime_type = $finfo->file($request->file('image'));
+            if (substr_count($request->file('image'), '.') > 1) {
+                return redirect()->back()->with('error', 'Doube dot in filename');
+            }
+
+            if ($mime_type != "image/png" && $mime_type != "image/jpeg") {
+                return redirect()->back()->with('error', 'File type not allowed');
+            }
+            
+            $extension = $request->file('image')->getClientOriginalExtension();
+            if ($extension != "jpg" && $extension != "jpeg" && $extension != "png") {
+                return redirect()->back()->with('error', 'File type not allowed');
+            }
+
+            $imageName = date('dmY_His') . '.' . $image->getClientOriginalExtension();
+            // $imageName = time('dmY') . '_' . $image->getClientOriginalName();
+            $image->move(public_path('uploads/banners'), $imageName);
             $imagePath = 'banners/' . $imageName;
-        }
+        } else 
+        {
+            $imagePath = 'assests/event.jpeg';
+        };
 
         // Store data in the database
         Banner::create([
@@ -131,15 +151,18 @@ class BannerController extends Controller
             }
 
             $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->move(public_path('storage/banners'), $imageName);
+            $imageName = date('dmY_His') . '_' . $image->getClientOriginalName();
+            $image->move(public_path('uploads/banners'), $imageName);
             $banner->image = 'banners/' . $imageName;
-        }
+        } else {
+            $banner->image = 'assests/user.png';
+        };
 
         // Update the banner
         $banner->update([
             'name' => $request->name,
             'caption' => $request->caption,
+            'image' => $banner->image,  // Use the existing image if no new image is uploaded
             'order' => $request->order,
             'status' => $request->status,
         ]);

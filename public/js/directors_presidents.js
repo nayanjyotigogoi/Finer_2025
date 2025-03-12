@@ -15,7 +15,7 @@ function initializeBODCarousel() {
         title: director.position,
         company: director.company,
         description: director.description,
-        image: director.photo ? `/storage/${director.photo}` : 'assets/default-placeholder.jpg',
+        image: director.photo ? `/uploads/${director.photo}` : 'assests/user.png',
     }));
 
     let currentIndex = 0;
@@ -79,7 +79,7 @@ function initializePastPresidentsCarousel() {
         name: president.name,
         title: president.position,
         description: president.description,
-        image: president.photo ? `/storage/${president.photo}` : 'assets/default-placeholder.jpg',
+        image: president.photo ? `/uploads/${president.photo}` : 'assests/user.png',
     }));
 
     let currentIndex = 0;

@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @push('styles')
-<link href="{{ asset('zcss/upcoming_events.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/upcoming_events.css') }}" rel="stylesheet">
 @endpush
 @section('content')
 
@@ -11,13 +11,25 @@
     </div>
 
     <div class="container-event">
-     
+
         <section class="events-section">
             <h2>Past Events</h2>
             <div class="events-list" id="eventsList">
                 @foreach($events as $event)
                     <div class="event-card">
-                        <img src="{{ asset('storage/'. $event->image) }}" alt="Event Image" class="event-image">
+                        <!-- <img src="{{ asset('storage/'. $event->image) }}" alt="Event Image" class="event-image"> -->
+                        @if (!empty($event) && !empty($event->image))
+                            @if (file_exists(public_path('storage/' . $event->image)))
+                                <img src="{{ asset('storage/' . $event->image) }}" alt="Event Image" class="event-image">
+                            @elseif (file_exists(public_path('uploads/' . $event->image)))
+                                <img src="{{ asset('uploads/' . $event->image) }}" alt="Event Image" class="event-image">
+                            @else
+                                <img src="{{ asset('assests/event.jpeg') }}" alt="Default Event Image" class="event-image">
+                            @endif
+                        @else
+                            <img src="{{ asset('assests/event.jpeg') }}" alt="Default Event Image" class="event-image">
+                        @endif
+
                         <div class="event-content">
                             <h3 class="event-title">{{ $event->title }}</h3>
                             <p class="event-date">{{ $event->start_date }}</p>
@@ -28,25 +40,25 @@
                             <button class="read-more" onclick="toggleDescription('{{ $event->id }}')">Read More</button>
 
                         </div>
-                      
+
                     </div>
                 @endforeach
             </div>
-            </div>
-            </div>
-        </section>
+    </div>
+    </div>
+    </section>
     </div>
 
-        <!-- Pagination Links -->
+    <!-- Pagination Links -->
     <div class="pagination">
         {{ $events->links() }} <!-- This generates the pagination links -->
     </div>
 
 @endsection
 @push('scripts')
-<script>
-   const events = @json($events);
-</script>
+    <script>
+        const events = @json($events);
+    </script>
 
-<script src="{{ asset('js/upcoming_events.js') }}"></script>
+    <script src="{{ asset('js/upcoming_events.js') }}"></script>
 @endpush

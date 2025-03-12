@@ -90,6 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
         "assests/hero_2.jpg",
         "assests/hero_1.jpg",
         "assests/hero_3.jpg",
+        "assests/hero_8.jpg",
+        "assests/hero_9.jpg",
     ];
 
     let currentIndex = 0;
@@ -324,7 +326,7 @@ const directors = directorsData.map(director => ({
     title: director.position,
     company: director.company,
     description: director.description,
-    image: director.photo ? `/storage/${director.photo}` : 'assets/default-placeholder.jpg', // updated to use `photo`
+    image: director.photo ? `/storage/${director.photo}` : 'assests/user.png', // updated to use `photo`
 }));
 
 

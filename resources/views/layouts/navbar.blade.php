@@ -39,7 +39,7 @@
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 7px;
         }
 
         .logo {
@@ -61,7 +61,7 @@
         .nav-links a {
             color: white;
             text-decoration: none;
-            padding: 10px 15px;
+            padding: 10px 12px;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -110,11 +110,27 @@
             background-color: rgba(255, 255, 255, 0.1);
         }
 
+        .conference-btn {
+            background-color: rgba(255, 161, 19, 1);
+            color: white;
+            border: none;
+            padding: 10px 6px;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .conference-btn:hover {
+            background-color: rgba(255, 145, 0, 1);
+            transform: scale(1.05);
+        }
+
         .member-btn {
             background-color: rgba(255, 161, 19, 1);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 6px;
             border-radius: 5px;
             font-weight: 500;
             cursor: pointer;
@@ -220,11 +236,13 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="/magazines">Magazines</a></li>
+                    <li><a href="/press-releases">Publications</a></li>
                 </ul>
             </li>
-            <li><a href="/press-releases">Publications</a></li>
+            
             <li><a href="/under-construction">Gallery</a></li>
             <li><a href="/Contact-Us">Contact Us</a></li>
+            <li><button class="conference-btn">Book Conference Hall</button></li>
             <li><button class="member-btn">Become a Member</button></li>
         </ul>
     </nav>
@@ -259,6 +277,10 @@
                     dropdown.classList.toggle('active');
                 }
             });
+        });
+
+        document.querySelector('.conference-btn').addEventListener('click', function() {
+            window.location.href = '/Book_conference_hall';
         });
 
         const memberButton = document.querySelector('.member-btn');

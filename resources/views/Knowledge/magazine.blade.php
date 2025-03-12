@@ -1,47 +1,71 @@
 @extends('layouts.layout')
 
 @push('styles')
-<link href="{{ asset('css/magazine.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/magazine.css') }}" rel="stylesheet">
 @endpush
 
 @section('content')
 
-<div class="header">
-    <h1>Magazines</h1>
-    <img src="assests/about-us-bg.jpg" alt="Background Image">
-</div>
+    <div class="header">
+        <h1>Magazines</h1>
+        <img src="assests/about-us-bg.jpg" alt="Background Image">
+    </div>
 
-<h2 class="press-release">// Magazines</h2>
+    <h2 class="press-release">// Magazines</h2>
 
-<div class="magazine-grid">
-    @foreach($magazines as $magazine)
-        <div class="magazine-card">
-            @if($magazine->image)
-                <img src="{{ asset('storage/' . $magazine->image) }}" alt="{{ $magazine->page_title }}" class="magazine-image">
-            @else
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="{{ $magazine->page_title }}" class="magazine-image">
-            @endif
-
-            <div class="magazine-content">
-                <h3>{{ $magazine->page_title }}</h3>
-                <p>{{ \Str::limit($magazine->description, 100) }}</p> <!-- Display a short description -->
-
-                @if($magazine->pdf)
-                <a href="{{ asset('storage/' . $magazine->pdf) }}" download class="download-btn">
-                    <i class="fa fa-download"></i>  Download
-                </a>
-
+    <div class="magazine-grid">
+        @foreach($magazines as $magazine)
+            <div class="magazine-card">
+                <!-- @if($magazine->image)
+                                <img src="{{ asset('storage/' . $magazine->image) }}" alt="{{ $magazine->page_title }}" class="magazine-image">
+                            @else
+                                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/new%20file%20(12).jpg-pmWy4wPOYaQDRE5vn4a5mZxowO3sIH.jpeg" alt="{{ $magazine->page_title }}" class="magazine-image">
+                            @endif -->
+                @if (!empty($magazine) && !empty($magazine->image))
+                    @if (file_exists(public_path('storage/' . $magazine->image)))
+                        <img src="{{ asset('storage/' . $magazine->image) }}" alt="{{ $magazine->page_title }}" class="magazine-image">
+                    @elseif (file_exists(public_path('uploads/' . $magazine->image)))
+                        <img src="{{ asset('uploads/' . $magazine->image) }}" alt="{{ $magazine->page_title }}" class="magazine-image">
+                    @else
+                        <img src="{{ asset('assets/event.jpeg') }}" alt="Default magazine image" class="magazine-image">
+                    @endif
                 @else
-                    <span>No PDF available</span>
+                    <img src="{{ asset('assets/event.jpeg') }}" alt="Default magazine image" class="magazine-image">
                 @endif
-            </div>
-        </div>
-    @endforeach
-</div>
 
-<!-- Pagination Controls -->
-<div class="pagination">
-    {{ $magazines->links() }}
-</div>
+
+                <div class="magazine-content">
+                    <h3>{{ $magazine->page_title }}</h3>
+                    <p>{{ \Str::limit($magazine->description, 100) }}</p> <!-- Display a short description -->
+
+                    <!-- @if($magazine->pdf)
+                                <a href="{{ asset('storage/' . $magazine->pdf) }}" download class="download-btn">
+                                    <i class="fa fa-download"></i> Download
+                                </a>
+
+                            @else
+                                <span>No PDF available</span>
+                            @endif -->
+                    @if (!empty($magazine) && !empty($magazine->pdf) && file_exists(public_path('storage/' . $magazine->pdf)))
+                        <a href="{{ asset('storage/' . $magazine->pdf) }}" download class="download-btn">
+                            <i class="fa fa-download"></i> Download
+                        </a>
+                    @elseif (!empty($magazine->pdf) && file_exists(public_path('uploads/' . $magazine->pdf)))
+                        <a href="{{ asset('uploads/' . $magazine->pdf) }}" download class="download-btn">
+                            <i class="fa fa-download"></i> Download
+                        </a>
+                    @else
+                        <span>No PDF available</span>
+                    @endif
+
+                </div>
+            </div>
+        @endforeach
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+        {{ $magazines->links() }}
+    </div>
 
 @endsection

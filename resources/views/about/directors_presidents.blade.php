@@ -22,7 +22,7 @@
                 <button class="BOD-nav-button BOD-prev">❮</button>
                 <button class="BOD-nav-button BOD-next">❯</button>
                 <div class="BOD-carousel-container" id="BOD-data-container">
-                    <!-- Cards will be dynamically inserted here by JavaScript -->
+                    <!-- Cards will be dynamically inserted here  -->
                 </div>
             </div>
         </div>

@@ -217,10 +217,11 @@ body {
                 <li><a href="#">Knowledge</a>
                     <ul class="submenu">
                         <li><a href="{{url('/magazines')}}">Magazines</a></li>
+                        <li><a href="{{ url('/press-releases')}}">Publications</a></li>
                     </ul>
                 </li>
 
-                <li><a href="{{ url('/press-releases')}}">Publications</a></li>
+                
                 <li><a href="#">Gallery</a></li>
             </ul>
         </div>

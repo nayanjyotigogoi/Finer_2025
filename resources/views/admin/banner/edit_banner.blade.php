@@ -63,7 +63,7 @@
                                     @enderror
                                     @if($banner->image)
                                         <img 
-                                            src="{{ asset('storage/banners/' . basename($banner->image)) }}" 
+                                            src="{{ asset('uploads/banners/' . basename($banner->image)) }}" 
                                             alt="Banner Image" 
                                             class="img-thumbnail mt-2" 
                                             width="150"

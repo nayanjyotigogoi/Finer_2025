@@ -47,10 +47,20 @@
 
                                 <!-- Current Image Display -->
                                 <div class="mb-3">
-                                    @if($pressRelease->image)
+                                    <!-- @if($pressRelease->image)
                                         <label class="form-label">Current Image</label><br>
                                         <img src="{{ asset('storage/press_releases/' . basename($pressRelease->image)) }}" 
                                              alt="Current Image" width="100" class="mb-2">
+                                    @endif -->
+                                    @if (!empty($pressRelease->image) && file_exists(public_path('storage/' . $pressRelease->image)))
+                                    <label class="form-label">Current Image</label><br>
+                                        <img src="{{ asset('storage/' . $pressRelease->image) }}" alt="Press Release Image" width="50"
+                                            height="50">
+                                    @elseif (!empty($pressRelease->image) && file_exists(public_path('uploads/' . $pressRelease->image)))
+                                        <img src="{{ asset('uploads/' . $pressRelease->image) }}" alt="Press Release Image" width="50"
+                                            height="50">
+                                    @else
+                                        <img src="{{ asset('assets/event.jpeg') }}" alt="Event Image" style="width: 50px; height: 50px; border-radius: 5px;">
                                     @endif
                                     
                                     <!-- Upload New Image -->

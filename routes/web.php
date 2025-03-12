@@ -150,9 +150,14 @@ Route::middleware(['auth', 'preventBackHistory'])->group(function(){
 
 });
 
+Route::get('/Book_conference_hall', function () {
+    return view('Book_conference_hall'); // Assuming the Blade view is 'resources/views/become_member.blade.php'
+});
+
 Route::get('/become-a-member', function () {
     return view('become_member'); // Assuming the Blade view is 'resources/views/become_member.blade.php'
 });
+
 
 //route for the about in the navbar.
 // About Us page

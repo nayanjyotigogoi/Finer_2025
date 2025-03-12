@@ -23,7 +23,7 @@ class directorProfilesController extends Controller
             $query->where('company', 'like', '%' . $request->company . '%');
         }
     
-        $directorProfiles = $query->paginate(10);
+        $directorProfiles = $query->paginate(8);
     
         if ($request->ajax()) {
             return response()->json(view('admin.director_profiles.partials.director_profiles_table', compact('directorProfiles'))->render());
@@ -49,12 +49,38 @@ class directorProfilesController extends Controller
             'status' => 'required|in:0,1',
             'description' => 'nullable|string|max:255',
         ]);
+        // dd($request->all());
 
         $photoPath = null;
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('director_profiles', 'public');
-        }
+            // $photoPath = $request->file('photo')->store('director_profiles', 'public');
+            
+            $file = $request->file('photo');
+            
+            $finfo = new \finfo(FILEINFO_MIME_TYPE);
+            $mime_type = $finfo->file($request->file('photo'));
+            if (substr_count($request->file('photo'), '.') > 1) {
+                return redirect()->back()->with('error', 'Doube dot in filename');
+            }
+            
+            if ($mime_type != "image/png" && $mime_type != "image/jpeg") {
+                return redirect()->back()->with('error', 'File type not allowed');
+            }
+           
+            $extension = $request->file('photo')->getClientOriginalExtension();
+            if ($extension != "jpg" && $extension != "jpeg" && $extension != "png") {
+                return redirect()->back()->with('error', 'File type not allowed');
+            }
 
+            $fileName = date('dmY_His') . '.' . $file->getClientOriginalExtension();
+
+            Request()->file('photo')->move(public_path('uploads/director_profiles'), $fileName);
+            $photoPath = 'director_profiles'. '/' . $fileName;
+
+        }
+        else {
+            $photoPath = 'assests/user.png';
+        };
 
         director_profile::create([
             'name' => $request->name,
@@ -93,12 +119,38 @@ class directorProfilesController extends Controller
             if ($directorProfile->photo) {
                 Storage::disk('public')->delete($directorProfile->photo);
             }
-            $photoPath = $request->file('photo')->store('director_profiles', 'public');
-            $directorProfile->photo = $photoPath;
-        }
+            // $photoPath = $request->file('photo')->store('director_profiles', 'public');
+            // $directorProfile->photo = $photoPath;
+
+            $file = $request->file('photo');
+            
+            $finfo = new \finfo(FILEINFO_MIME_TYPE);
+            $mime_type = $finfo->file($request->file('photo'));
+            if (substr_count($request->file('photo'), '.') > 1) {
+                return redirect()->back()->with('error', 'Doube dot in filename');
+            }
+            
+            if ($mime_type != "image/png" && $mime_type != "image/jpeg") {
+                return redirect()->back()->with('error', 'File type not allowed');
+            }
+           
+            $extension = $request->file('photo')->getClientOriginalExtension();
+            if ($extension != "jpg" && $extension != "jpeg" && $extension != "png") {
+                return redirect()->back()->with('error', 'File type not allowed');
+            }
+
+            $fileName = date('dmY_His') . '.' . $file->getClientOriginalExtension();
+
+            Request()->file('photo')->move(public_path('uploads/director_profiles'), $fileName);
+            $photoPath = 'director_profiles'. '/' . $fileName;
+        } else {
+            $photoPath = 'assests/user.png';
+        };
+
 
         $directorProfile->update([
             'name' => $request->name,
+            'photo' => $photoPath,
             'position' => $request->position,
             'company' => $request->company,
             'address' => $request->address,

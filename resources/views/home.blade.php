@@ -37,7 +37,7 @@
         <section class="about-us scroll-fade-in">
             <section class="about-section">
                 <div class="image-container">
-                    <div class="experience-badge">5+ Industry<br>
+                    <div class="experience-badge">25+ Industry<br>
                     Experience</div>
                     <img src="assests/about_us1.jpg" alt="Business meeting" class="image-top" >
                     <img src="assests/about_us2.jpg" alt="Team collaboration" class="image-bottom">
@@ -292,10 +292,10 @@
             <div class="banner">
                 @if($banners->isNotEmpty())
                 <!-- Display the first active banner's image -->
-                <img src="{{ asset('storage/' . $banners->first()) }}" alt="Banner Image"> 
+                <img src="{{ asset('uploads/' . $banners->first()) }}" alt="Banner Image"> 
                 @else
                     <!-- Fallback: Default banner image -->
-                    <img src="assests/banner_2.png" alt="Default Banner Image">
+                    <img src="assests/event.jpeg" alt="Default Banner Image">
                 @endif
             </div>
         </section>
@@ -314,7 +314,13 @@
                                 <span class="event-month">{{ \Carbon\Carbon::parse($event->event_date)->format('M') }}</span>
                                 <span class="event-day">{{ \Carbon\Carbon::parse($event->event_date)->format('d') }}</span>
                             </div>
-                            <img src="{{ asset('storage/' . $event->image) }}" alt="Event" class="event-event-image">
+                            <!-- <img src="{{ asset('storage/' . $event->image) }}" alt="Event" class="event-event-image"> -->
+                            @if (!empty($event->image) && Storage::disk('public')->exists($event->image))
+                                <img src="{{ asset('storage/' . $event->image) }}" alt="Event" class="event-event-image">
+                            @else
+                                <img src="{{ asset('/assests/event.jpeg') }}" alt="Default Event" class="event-event-image">
+                            @endif
+
                             <div class="event-event-content">
                                 <h3 class="event-event-title">{{ $event->title }}</h3>
                                 <p class="event-event-description">
@@ -337,7 +343,13 @@
 
                     @foreach($pastEvents as $event)
                         <div class="event-past-event-card">
-                            <img src="{{ asset('storage/' . $event->image) }}" alt="Past Event" class="event-past-event-image">
+                            <!-- <img src="{{ asset('storage/' . $event->image) }}" alt="Past Event" class="event-past-event-image"> -->
+
+                            @if (!empty($event->image) && Storage::disk('public')->exists($event->image))
+                                <img src="{{ asset('storage/' . $event->image) }}" alt="Past Event" class="event-past-event-image" >
+                            @else
+                            <img src="{{ asset('/assests/event.jpeg') }}" alt="Default Event" class="event-past-event-image">
+                            @endif
                             <div class="event-past-event-content">
                                 <h3 class="event-event-title">{{ $event->title }}</h3>
                                 <p class="event-event-description">
@@ -368,6 +380,7 @@
                     <button class="BOD-nav-button BOD-prev">❮</button>
                     <button class="BOD-nav-button BOD-next">❯</button>
                     <div class="BOD-carousel-container" id="BOD-data-container">
+                        
                         <!-- Cards will be dynamically inserted here by JavaScript -->
                     </div>
                 </div>
@@ -376,43 +389,44 @@
 
 
 
-<!-- blog section -->
-<section class="blog-section scroll-fade-in">
-    <div class="blog-container">
-        <div class="blog-post-container">
-            <span class="blog-section-label">//Press Release</span>
-            <div class="blog-post-wrapper">
-                <!-- Blog Posts -->
-                @foreach($pressReleases as $pressRelease)
-                    <div class="blog-post">
-                        @if($pressRelease->image)
-                            <!-- Link to open image in a new tab -->
-                            <a href="{{ asset('storage/' . $pressRelease->image) }}" target="_blank">
-                                <img src="{{ asset('storage/' . $pressRelease->image) }}" alt="Blog image">
-                            </a>
-                        @else
-                            <img src="{{ asset('default-placeholder.jpg') }}" alt="Default image">
-                        @endif
-                        <h3 class="blog-post-h3">{{ $pressRelease->page_title }}</h3>
-                        <p class="blog-post-p">{{ Str::limit($pressRelease->description, 100) }}</p>
-                        @if($pressRelease->image)
-                            <a href="{{ asset('storage/' . $pressRelease->image) }}" download class="download-button">Download Image</a>
-                        @else
-                            <span>No Image available</span>
-                        @endif
+        <!-- blog section -->
+        <section class="blog-section scroll-fade-in">
+            <div class="blog-container">
+                <div class="blog-post-container">
+                    <span class="blog-section-label">//Press Release</span>
+                    <div class="blog-post-wrapper">
+                        <!-- Blog Posts -->
+                        @foreach($pressReleases as $pressRelease)
+                            <div class="blog-post">
+                                @if($pressRelease->image)
+                                    <!-- Link to open image in a new tab -->
+                                    <a href="{{ asset('storage/' . $pressRelease->image) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $pressRelease->image) }}" alt="Blog image">
+                                    </a>
+                                @else
+                                <img src="{{ asset('/assests/event.jpeg') }}" alt="Default Event" class="No-image">
+                                    
+                                @endif
+                                <h3 class="blog-post-h3">{{ $pressRelease->page_title }}</h3>
+                                <p class="blog-post-p">{{ Str::limit($pressRelease->description, 100) }}</p>
+                                @if($pressRelease->image)
+                                    <a href="{{ asset('storage/' . $pressRelease->image) }}" download class="download-button">Download Image</a>
+                                @else
+                                    <span>No Image available</span>
+                                @endif
+                            </div>
+                        @endforeach
                     </div>
-                @endforeach
+                </div>
+                <a class="twitter-timeline" data-width="450" data-height="500" href="https://twitter.com/FINERIndia?ref_src=twsrc%5Etfw">Tweets by FINERIndia</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
-        </div>
-        <a class="twitter-timeline" data-width="450" data-height="500" href="https://twitter.com/FINERIndia?ref_src=twsrc%5Etfw">Tweets by FINERIndia</a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    </div>
-    <div class="blog-nav">
-        <span class="blog-dot active"></span>
-        <span class="blog-dot"></span>
-        <span class="blog-dot"></span>
-    </div>
-</section>
+            <div class="blog-nav">
+                <span class="blog-dot active"></span>
+                <span class="blog-dot"></span>
+                <span class="blog-dot"></span>
+            </div>
+        </section>
 
     </div>
  
